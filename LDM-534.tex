@@ -1,4 +1,5 @@
 \documentclass[DM,lsstdraft,STS,toc]{lsstdoc}
+\usepackage{enumitem}
 \input meta.tex
 
 \begin{document}
@@ -18,8 +19,8 @@
 % a short abstract
 %
 \setDocAbstract {
-This is a template for the Software Test Specification document for \product.
-It encompasses the test design, test case and test procedure specification.}
+This document describes the detailed test specification for the \product.
+}
 
 %
 % the title page
@@ -33,26 +34,82 @@ It encompasses the test design, test case and test procedure specification.}
 	\addtohist{1}{\vcsdate}{Initial release.}{JDS}
 }
 
-\section{Introduction \label{sect:intro}}
-This section should provide an overview of the entire document and a description of the scope of testing.
+\section{Introduction}
+\label{sec:intro}
 
-\subsection{Objectives \label{sect:objectives}}
-Test specification document helps in refining the test approach that was planned for executing the test plan. It identifies
-the test cases, procedures and the pass/fail criteria for the specific tests. It outlines the actual values required as input parameters
-in the testing process and the expected outputs of the testing results. It also identifies the various constraints related to the
-test case. \\It is important to note that test cases can be reusable components and one test case can be used in various test designs.\\
-The test procedure outlines all the processes that are required to test the system and implement the test cases.
+This document specifies the test procedure for the \product.
 
-\subsection{Scope \label{sect:scope}}
-Define the scope (refining the detailed in the Software Test Plan \citeds{LDM-503}) of the testing whose specifications are
-described in this document.
+The \product is the compontent of the LSST system which is responsible for
+scientific processing leading to:
 
-\subsection{Applicable Documents \label{sect:appdocs}}
+\begin{itemize}
+
+  \item{Annual data release production;}
+  \item{Periodic (re-) generation of calibration products;}
+  \item{Periodic (re-) generation of templates for generating difference
+  images, to be consumed in the L1 system;}
+  \item{Generating QC metrics based on pipeline execution and post-processing of
+  scientific data products.}
+
+\end{itemize}
+
+
+\subsection{Objectives}
+\label{sec:objectives}
+
+This document builds on the description of LSST Data Management's approach to
+testing as described in \citeds{LDM-503} to describe the detailed tests that
+will be performed on the \product as part of the verification of the DM system.
+
+It identifies test designs, test cases and procedures for the tests, and the
+pass/fail criteria for each test. It identifies pass/fail criteria for each
+test.
+
+\subsection{Scope}
+\label{sec:scope}
+
+This document describes the test procedures for the following components of
+the LSST system (as described in \citeds{LDM-148}):
+
+\begin{note}
+
+This list does not include any of the pipeline execution components, which I
+take as falling outside this document: should check.
+
+Per mail to KTL, WOM of 2017-06-24, I suggest that we need to add a ``QC
+Payloads'' component.
+
+Per the same mail, I suggest that the ``Science Algorithms'' and ``Science
+Primitives'' components should not exist.
+
+\end{note}
+
+\begin{itemize}
+
+  \item{Annual Calibration}
+  \item{Daily Calibration Update}
+  \item{Data Release Production}
+  \item{Periodic Calibration}
+  \item{Raw Calibration}
+  \item{Science Algorithms (partial)}
+  \item{Science Primitives (partial)}
+  \item{Template Generation}
+
+\end{itemize}
+
+\subsection{Applicable Documents}
+\label{sec:docs}
+
 \addtocounter{table}{-1}
 
 \begin{tabular}[htb]{l l}
-\citeds{LDM-294}& DM Management Plan\\
-\citeds{LDM-503}& LSST DM  Test Plan\\
+\citeds{LDM-151} & LSST DM Science Pipelines Design \\
+\citeds{LDM-294} & LSST DM Organization \& Management \\
+\citeds{LDM-502} & The Measurement and Verification of DM Key Performance Metrics \\
+\citeds{LDM-503} & LSST DM Test Plan \\
+\citeds{LSE-61}  & LSST DM Subsystem Requirements \\
+\citeds{LSE-163} & LSST Data Products Definition Document \\
+\citeds{LSE-180} & Level 2 Photometric Calibration for the LSST Survey \\
 \end{tabular}
 
 \subsection{References\label{sect:references}}
@@ -66,47 +123,141 @@ described in this document.
 %----------------------------------------------------
 % TASK IDENTIFICATION - APPROACH
 %----------------------------------------------------
-\section{Approach \label{sect:Approach}}
-Describe the approach to be utilized for the software testing specification. It should identify the major activities, methods
-and tools that are to be used to test the designated group of features.
-\subsection{Tasks and criteria \label{sect:tasks}}
-Describe which are the items under tests, as well as criteria to be utilized. Activities should be described in sufficient detail
-to allow identification of the major testing tasks and estimation of the resources and time needed for the tests.
-\subsection{Features to be tested \label{sect:feat2tested}}
-Describe the GENERAL features to be tested.
-\subsection{Features not to be tested \label{sect:featnot2tested}}
-Describe all the features and significant combinations not to be tested and explain why. If it is not possible to test some
-features at their most appropriate level of testing but which will be tested at a later level, this information should be
-included here
-\subsection{Pass - Fail criteria \label{sect:passfail}}
-GENERAL criteria to be used to determine whether or not tests are passed.\\
-If we agree its always what is in LDM-503 then this is not needed.
+\section{Approach}
+\label{sec:approach}
 
-\subsection{Suspension criteria and resumption requirements \label{suspension}}
-Describe the criteria used to suspend all, or a part of, the testing activities on the test items associated with
-the plan, as well as the activities to be repeated when testing is resumed.
+The major activities to be performed are to:
 
-%--------------------
-\subsection{ Possible  NAMING CONVENTION}
-%--------------------
 \begin{itemize}
-	%\item TARGET: Institute where it runs
-	\item PROD: product code from LDM-294 product list
-	\item SCOPE: type of tests (but it could be extended in case the needs of the CU)
+
+  \item{Compare the design of the Data Release Production payload as
+  implemented to the requirements on the outputs of the DM Subsystem as
+  defined in \citeds{LSE-63} and \citeds{LSE-163} to demonstrate that all data
+  products required by the scientific community will be delivered by the
+  system as built.}
+
+  \item{Ensure that all data products included in the DRP payload design are
+  correctly produced and persisted appropriately to the LSST Data Backbone
+  when executing a data release production.}
+
+  \item{Compare the design of the Calibration Products payloads as implemented
+  to the requirements laid down in \citeds{LSE-63}, the overall design
+  described in \citeds{LSE-180} and the inputs of the scientific pipeline
+  payloads as described in \citeds{LDM-151}.}
+
+  \item{Ensure that all data products included in the CPP payload design are
+  correctly produced and persisted appropriately to the LSST Data Backbone
+  and/or Calibration Database when executing a calibration products
+  production.}
+
+  \item{Compare the implementation of the Template Generation payloads to the
+  inputs required by the Alert Production payload as defined in
+  \citeds{LDM-151}.}
+
+  \item{Ensure that all data products required by the L1 system are correctly
+  produced and persisted appropriately to the LSST Data Backbone when
+  executing a template generation production.}
+
+  \item{Demonstrate that QC metrics are properly calculated and transmitted
+  during the execution all L2 production types.}
+
+  \item{Demonstrate that post-processing QC analysis of data products can be
+  used to identify and report on failures or anomalies in the processing.}
+
+\end{itemize}
+
+\subsection{Tasks and criteria}
+\label{sec:tasks}
+
+The follwing are the major items under test:
+
 \begin{itemize}
-	\item	FUN: concerning functional testing
-	\item	PRF: concerning performance testing
-	\item	INT: concerning integration testing
-	\item	MNT: concerning maintenance testing
-	\item 	ACP: concerning acceptance testing
-	\item	REG: concerning regression testing
-	\item	INS: concerning installation testing
-	\item	BCK: concerning backup and restore testing
-	\item	ITF: concerning interface testing
-	\item XX: test design number (from ten to ten - i.e. 10, 20, 30...)
-	\item YY: test case number (from five to five - i.e. 05, 10, 15...)
+
+  \item{Science payloads capable of generating all LSST Level 2 data
+  products;}
+
+  \item{Calibration products payloads, run at a variety of cadences, to
+  generate all calibration products required in the generation of LSST Level 1
+  and 2 data products;}
+
+  \item{Template generation payloads capable of generating deep teamples
+  required for difference imaging in the context of the LSST Level 1 system.}
+
 \end{itemize}
+
+\subsection{Features to be tested}
+\label{sec:feat2test}
+
+\begin{itemize}
+
+  \item{Execution of payloads described in \S\ref{sec:tasks};}
+  \item{Persistence of all required data products.}
+
 \end{itemize}
+
+
+\subsection{Features not to be tested}
+\label{sec:featnot2test}
+
+This version of the \product test specification addresses only the functional
+requirements of the systems under test, as derived from the DM System
+Requirements (\citeds{LSE-61}).
+
+A further set of requirements which describe the scientific fidelity of the
+output data products are not tested in this version of this test
+specification pending flow-down to \citeds{LSE-61}.
+
+The progress of the DM system towards satisfying the scientific requirements
+on LSST's data products is tracked by means of a series of Key Performance
+Metrics (KPMs) derived from high-level requirements documents (\citeds{LPM-17,
+LSE-29, LSE-30}). The system being used to track KPMs and to ensure compliance
+with these requirements is described in \citeds{LDM-502}.
+
+\subsection{Pass/fail criteria}
+\label{sec:passfail}
+
+The results of all tests will be assessed using the criteria described in
+\citeds{LDM-503} \S4.
+
+\subsection{Suspension criteria and resumption requirements}
+\label{suspension}
+
+Refer to individual test cases where applicable.
+
+\subsection{Naming convention}
+
+All tests are named according to the pattern \textsc{prod-scope-xx-yy} where:
+
+\begin{description}[font=\normalfont\scshape]
+
+  \item[prod]{The product code, per \citeds{LDM-294}. Relevant entries for this document are:
+    \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
+      \item[cppslow]{Periodic CPP payload}
+      \item[cppyear]{Annual CPP payload}
+      \item[tmplgen]{Template generation payload}
+      \item[cppqc]{CPP QC measurement generators}
+      \item[drp]{Annual mini-DRP and DRP payload}
+      \item[l2qc]{L2 QC measurement generators}
+      \item[cppqc]{CPP QC measurement generators}
+    \end{description}
+  }
+  \item[scope]{The type of test being described:
+    \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
+      \item[fun]{concerning functional testing}
+      \item[prf]{concerning performance testing}
+      \item[int]{concerning integration testing}
+      \item[mnt]{concerning maintenance testing}
+      \item[acp]{concerning acceptance testing}
+      \item[reg]{concerning regression testing}
+      \item[ins]{concerning installation testing}
+      \item[bck]{concerning backup and restore testing}
+      \item[itf]{concerning interface testing}
+    \end{description}
+  }
+  \item[xx]{Test design number (in increments of 10)}
+  \item[yy]{Test case number (in increments of 5)}
+
+\end{description}
 
 
 %--------------------------------------------------
