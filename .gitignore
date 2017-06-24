@@ -1,0 +1,7 @@
+meta.tex
+*.aux
+*.out
+*.log
+*.pdf
+*.toc
+*.swp
