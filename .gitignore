@@ -5,3 +5,7 @@ meta.tex
 *.pdf
 *.toc
 *.swp
+*.bbl
+*.blg
+*.bbl
+*.blg
