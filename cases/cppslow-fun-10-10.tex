@@ -1,0 +1,71 @@
+\subsection{\textsc{cppslow-fun-10-10}: Crosstalk correction matrix generation}
+\label{cppslow-fun-10-10}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0061,DMS-REQ-0130.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates a
+  matrix describing the fraction of the signal detected in any given amplifier
+  on each sensor in the focal plane appears in any other amplifier.}
+
+\end{itemize}
+
+Note that crosstalk is sensitive to the details of the camera configuration
+(circuit board locations, cable flex, etc), and so the final values of the
+crosstalk correction matrix cannot be measured until the camera is in situ on
+the mountain (and even then they may continue to evolve, necessitating periodic
+re-measurement). However, this test verifies the operation of the algorithm for
+generating the matrix, not the values used in operation, so this test does not
+need to be run with the camera in its final configuration.
+
+\subsection{Intercase dependencies}
+
+None.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Dithered Colliated Beam Projector (CBP) observations with the full
+  camera or a representative subset thereof.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{A crosstalk correction matrix.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The task for generating the crosstalk correction matrix will be executed from the
+command line, with a configuration appropriate for it to fetch required input
+data from the input Butler repository.
+
+The resulting crosstalk correction matrix will be persisted to the output
+repository. It should be retrieved from the output repository using the Butler
+and checked to ensure it contains physically plausible values (TBD by the
+Calibration Scientist).

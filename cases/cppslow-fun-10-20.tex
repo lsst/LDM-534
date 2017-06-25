@@ -1,0 +1,67 @@
+\subsection{\textsc{cppslow-fun-10-20}: Monochromatic flat field generation}
+\label{cppslow-fun-10-20}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0063,DMS-REQ-0130.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates an
+  set of master pure monochromatic flat field images .}
+
+\end{itemize}
+
+\subsection{Intercase dependencies}
+bias-, overscan-, and dark-corrected
+
+DMS-REQ-0060,DMS-REQ-0062,DMS-REQ-0282.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Monochromatic flat field images;}
+  \item{Collimated Beam Projector (CBP) images as specified in \citeds{LDM-151}
+  \S4.2.10.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{A monochromatic flat field data cube.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+Tasks for assembling, bias correcting and dark correcting the monochromatic
+flat field images will be executed from the command line, and the results
+persisted to a data repository. These serve as inputs to the monochromatic flat
+field data cube production.
+
+The task for generating the monochromatic flat field data cube will be executed
+from the command line, and the results persisted to a further data repository.
+
+The Butler will be used to retrieve the flat field data cube from the output
+repository, and the contents checked to ensure they are physically plausible
+(values TBD by the Calibration Scientist.)

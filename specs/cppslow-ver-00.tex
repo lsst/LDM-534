@@ -1,0 +1,52 @@
+\subsection{\textsc{cppslow-ver-00}: Calibration Product Verification}
+\label{cppslow-ver-00}
+
+\subsubsection{Objective}
+
+This test design verifies that the calibration products production pipeline as
+designed and built meets the overall requirements of the DM system.
+Specifically, we verify that:
+
+\begin{itemize}
+
+  \item{The design of the system is such that all calibration products
+  required by \citeds{LSE-61} are produced;}
+
+  \item{The code as delivered is accompanied by a suite of unit tests;}
+
+  \item{The code as delivered is accompanied by appropriate documentation;}
+
+  \item{The code complies with all relevant DM coding standards;}
+
+  \item{The code makes use of standard DM interfaces to e.g. the data
+  backbone, the logging system, the provenance system;}
+
+  \item{The code is built and tested by the DM continuous integration system.}
+
+\end{itemize}
+
+Note that the tests described in this section apply to all perioically
+executed calibration products production payloads, regardless of cadence (the
+same codebase will be used for daily updates and annual calibration products
+production).
+
+\subsubsection{Approach refinements}
+
+The general approach defined in \citeds{LDM-503} is used. Methods include:
+
+\begin{itemize}
+
+  \item{Document inspection;}
+  \item{Code inspection;}
+  \item{Review of CI system logs.}
+
+\end{itemize}
+
+\subsubsection{Test case identification}
+
+\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+\textbf{Test Case}  & \textbf{Description} \\\hline
+\hyperref[cppslow-ver-00-00]{\textsc{cppslow-ver-00-00}} & CPP design inspection \\\hline
+\hyperref[cppslow-ver-00-05]{\textsc{cppslow-ver-00-05}} & CPP code inspection \\\hline
+\hyperref[cppslow-ver-00-10]{\textsc{cppslow-ver-00-10}} & CPP testing review \\\hline
+\end{longtable}
