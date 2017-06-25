@@ -232,6 +232,7 @@ All tests are named according to the pattern \textsc{prod-scope-xx-yy} where:
 
   \item[prod]{The product code, per \citeds{LDM-294}. Relevant entries for this document are:
     \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
+      \item[caldaily]{Daily CP payload}
       \item[cppslow]{Periodic CPP payload}
       \item[cppyear]{Annual CPP payload}
       \item[tmplgen]{Template generation payload}
@@ -263,233 +264,470 @@ All tests are named according to the pattern \textsc{prod-scope-xx-yy} where:
 %--------------------------------------------------
 % SPECIFICATION DESIGN OVERVIEW
 %--------------------------------------------------
-\section{Specification Design Overview \label{sect:design}}
-Specify refinements of the test approach described in \citeds{LDM-503} if any.
-If not suppress this section .
+%\section{Specification Design Overview \label{sect:design}}
+%Specify refinements of the test approach described in \citeds{LDM-503} if any.
+%If not suppress this section .
 
-% NON-TESTING VERIFICATION METHODS TEST DESIGN
-\section{\product-VER-XX \label{sect:designid_verification}}
 
-\subsection{Objective \label{sect:designobj}}
-This test design includes all the verification methods different to the dynamic testing, needed for the
-demonstration of the fulfillment of specific requirements of the DMSR.\\
-This includes  the requirements that do not need the execution of the software systems, but a careful document or code inspection, review
-or analysis.
+\section{Test Specification Design}
 
-\subsection{Features to be tested \label{sect:totest}}
-Identify the test items and describe the features and combinations of features that are the object of this design
-specification. E.g.:\\
+\subsection{\textsc{cppslow-ver-00}: Calibration Product Verification}
+
+\subsubsection{Objective}
+
+This test design verifies that the calibration products production pipeline as
+designed and built meets the overall requirements of the DM system.
+Specifically, we verify that:
+
 \begin{itemize}
-\item Demonstrate that the CU has produced an specific document (e.g. the Software Development Plan)
-\item Demonstrate the behavior or value of an specific parameter (e.g. "As a minimum the PPN parameter shall be included in
-the global model"
-\item Static analysis using tools such as Findbugs or checkstyle, etc.
-\item etc
-\end{itemize}
-The features to be tested depends on the content of the Software Requirements Document. Therefore the above list is just
-an example.
 
-\subsection{Approach refinements \label{sect:approach}}
-Specify the verification methods to be used to verify the features describe in the section above. These methods are
-described in the DM SVTP \citeds{LDM-503}. E.g.:
-\begin{itemize}
-\item Code inspection
-\item Document inspection
-\item Review
-\item Static analysis
-\item etc
+  \item{The design of the system is such that all calibration products
+  required by \citeds{LSE-61} are produced;}
+
+  \item{The code as delivered is accompanied by a suite of unit tests;}
+
+  \item{The code as delivered is accompanied by appropriate documentation;}
+
+  \item{The code complies with all relevant DM coding standards;}
+
+  \item{The code makes use of standard DM interfaces to e.g. the data
+  backbone, the logging system, the provenance system;}
+
+  \item{The code is built and tested by the DM continuous integration system.}
+
 \end{itemize}
 
-\subsection{Test case identification \label{sect:testcaselist}}
-List the identifier and a brief description of each test case associated with this design.
-We need to agree on the identifiers here .. perhaps they come out of MD ?
+Note that the tests described in this section apply to all perioically
+executed calibration products production payloads, regardless of cadence (the
+same codebase will be used for daily updates and annual calibration products
+production).
+
+\subsubsection{Approach refinements}
+
+The general approach defined in \citeds{LDM-503} is used. Methods include:
+
+\begin{itemize}
+
+  \item{Document inspection;}
+  \item{Code inspection;}
+  \item{Review of CI system logs.}
+
+\end{itemize}
+
+\subsubsection{Test case identification}
 
 \begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
-{\bf Test Case}  & {\bf Description}  \\\hline
-\product-VER-XX-10 & design inspection \\\hline
-\product-VER-XX-15 & Code inspection \\\hline
-\product-VER-XX-20 & Testing review \\\hline
-etc & \\\hline
-\end{longtable}
-The number and scope of the test cases depend on the requirements to be verified. The list provide above is only an example.
-
-\subsection{Feature pass/fail criteria}
-Specify the specific criteria for this design to be used to determine whether the feature or feature combination has passed or failed.
-
-% NON-TESTING VERIFICATION METHODS TEST CASES
-\subsection{Test Case \product-VER-XX-YY \label{sect:testcaseid}}
-
-\subsubsection{Requirements \label{sect:reqs}}
-Specify the requirements that fulfill the test case, comma-separated and ending with '.'\\
-e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
-Note that the format is essential for the script that creates the traceability matrices works fine.
-
-\subsubsection{Test items \label{sect:tcitems}}
-Identify and briefly describe the items and features to be exercised by this test case (e.g.:
-\begin{itemize}
-\item  demonstrate that an
-specific document is written or that it contains the information required
-\item or...
-\item demonstrate that a parameter is set to a specific value
-\item or...
-\item the code is written in python3
-\end{itemize}
-
-\subsubsection{Intercase dependencies \label{sect:interface_dependencies}}
-List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
-
-\subsubsection{Procedure \label{sect:procedures}}
-If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
-case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
-the test procedure shall be given otherwise. \\
-
-Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
-up, operator intervention, output determination procedures, and special wrap up.
-
-
-\section{\product-SCOPE-XX \label{sect:designid}}
-
-\subsection{Objective}
-Specify the objective of this test design.
-
-\subsection{Features to be tested}
-Identify the test items and describe the features and combinations of features that are the object of this design
-specification. Other features may be exercised, but need not be identified.\\
-For each feature or feature combination, a reference to its associated requirements should be included.
-
-\subsection{Approach refinements}
-Specify refinements to the approach described in the test plan. Include specific test techniques to be used.
-The method on analysis test results should be identified.\\
-Specify the results of any analysis that provides a rationale for test case selection.\\
-Summarize the common attributes of any test cases. This may include input constraints that must be true for every input
-in the set of associated test cases, any shared environmental needs, any shared special procedural requirements and any
-shared case dependencies.
-
-\subsection{Test case identification}
-List the identifier and a brief description of each test case associated with this design.
-
-\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
-{\bf Test Case}  & {\bf Description}  \\\hline
-\product-SCOPE-XX-YY &
-Description of the test case \\\hline
+\textbf{Test Case}  & \textbf{Description} \\\hline
+\hyperref[cppslow-ver-00-00]{\textsc{cppslow-ver-00-00}} & CPP design inspection \\\hline
+\hyperref[cppslow-ver-00-05]{\textsc{cppslow-ver-00-05}} & CPP code inspection \\\hline
+\hyperref[cppslow-ver-00-10]{\textsc{cppslow-ver-00-10}} & CPP testing review \\\hline
 \end{longtable}
 
-\subsection{Feature pass/fail criteria}
-Specify the specific criteria for this design to be used to determine whether the feature or feature combination has passed or failed.
+\section{Test Case Specification}
 
+\subsection{Preparation}
 
-%\newpage
+Before running any test case, the LSST Science Pipelines must be correctly
+installed. Follow the procedure described in the
+\href{https://pipelines.lsst.io}{Pipelines Documentation}.
 
-%--------------------------------------------------
-% TEST CASE SPECIFICATION
-%--------------------------------------------------
-%\subsection{Test Case Specification \label{sect:testcases}}
-%Define the test cases identified by a test design specification. For each identify test case specify:
-
-%\newpage
-
-\subsection{Test Case \product-SCOPE-XX-YY}
+\subsection{\textsc{cppslow-ver-00-00}: CPP design inspection}
+\label{cppslow-ver-00-00}
 
 \subsubsection{Requirements}
-Specify the requirements that fulfill the test cases, comma-separated and ending with '.'\\
-e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
-Note that the format is essential for the script that creates the traceability matrices works fine.
+
+DMS-REQ-0059,DMS-REQ-0060,DMS-REQ-0061,DMS-REQ-0062,DMS-REQ-0063,DMS-REQ-0130,DMS-REQ-0132,DMS-REQ-0282,DMS-REQ-0283.
 
 \subsubsection{Test items}
-Identify and briefly describe the items and features to be exercised by this test case.\\
-For each item, consider supplying references to the following test item documentation: requirements specification, design
-specification, user guide, operations guide, installation guide, etc.
 
-\subsubsection{Input specification \label{sect:tcinput}}
-Specify each input required to execute the test case. Some of the inputs will be specified by value (with tolerances where
-appropriate), while others will be specified by name.\\
-Identify all appropriate databases, files, terminal messages, memory resident areas, and values passed by the operating system.\\
-Specify all required relationships between inputs (e.g. timing).
+This test will check:
 
-\subsubsection{Output specification \label{sect:tcoutput}}
-Specify all the outputs and features (e.g. response time) required of the test items.
+\begin{itemize}
 
-\subsubsection{Environmental needs \label{sect:tcenvironment}}
-\paragraph{Hardware \label{sect:tchw}}
-Specify the characteristics and configurations of the hardware required to execute this test case.
-\paragraph{Software \label{sect:tcsw}}
-Specify the system and application software required to execute this test case. This may include system software such as operating
-systems, compilers, simulators, and test tools.
-\paragraph{Other \label{sect:tcother}}
-Any other special requirements such as unique facility needs or specially trained personnel.
+  \item{That the design of the calibration products production pipelines is
+  adequate to meet the DM subsystem requirements.}
 
-\subsubsection{Intercase dependencies}
-List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
+\end{itemize}
+
+\subsection{Intercase dependencies}
+
+None.
 
 \subsubsection{Procedure}
-If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
-case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
-the test procedure shall be given otherwise. \\
 
-Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
-up, operator intervention, output determination procedures, and special wrap up.
+By reference to \citeds{LDM-151}, the Science Pipelines design document, and
+\citeds{LSE-61}, the DM subsystem requirements, demonstrate that:
 
-\newpage
+\begin{itemize}
 
-%-----------------------------------------
-% PROCEDURES
-%-----------------------------------------
-\section{Test Procedure Specification \label{proc_spec}}
+  \item{The calibration products to be produced by the design outlined in
+  \citeds{LDM-151} satisfy all of the DM requirements;}
+  \item{All of the calibration products to be produced are required for use by
+  either the L1 or L2 science payloads, or have some other identified
+  purpose.}
 
-This section could be removed if the test cases specification describe their specific procedure, i.e. the procedure is included
-in the test case definition.
+\end{itemize}
 
-\subsection{Introduction \label{sect:peroc_intro}}
-The purpose is to specify the steps for executing a set of test cases or, more generally, the steps used to analyze a software in order
-to evaluate a set of features.\\
-For every test procedure:
+\subsection{\textsc{cppslow-ver-00-05}: CPP code inspection}
+\label{cppslow-ver-00-05}
 
-\subsection{[PROCEDURE IDENTIFIER] \label{sect:procedureid}}
+\subsubsection{Requirements}
 
-\subsubsection{Purpose \label{sect:proc_purpose}}
-Describe the purpose of this procedure. Provide the reference of the test cases that are executed by the procedure.
+DMS-REQ-0132,DMS-REQ-0158,DMS-REQ-0308.
 
-\subsubsection{Special requirements \label{sect:proc_reqs}}
-Identify any special requirements that are necessary for the execution of this procedure. These may include prerequisite procedures,
-special skills requirements and special environmental requirements.
+\subsubsection{Test items}
 
-\subsubsection{Procedure steps \label{sect:proc_steps}}
-Describe every step of each procedure execution. Include the following steps as applicable:
-\paragraph{Log \label{sect:proc_log}}
-Describe any special methods or format for logging the results of test execution, the incidents observed, and any other events
-pertinent to the test.
-\paragraph{Set up \label{sect:proc_setup}}
-Describe the sequence of actions necessary to set up the procedure execution.
-\paragraph{Start \label{sect:proc_start}}
-Describe the actions necessary to begin the procedure execution.
-\paragraph{Proceed \label{sect:proc_proceed}}
-Describe the actions necessary during the procedure execution.
-\paragraph{Measure \label{sect:proc_measure}}
-Describe how the test measurements is made.
-\paragraph{Shut down \label{sect:proc_shutdown}}
-Describe the action necessary to suspend testing when interruption is forced by unscheduled events.
-\paragraph{Restart \label{sect:proc_restart}}
-Identify any procedural restart points and describe the actions necessary to restart the procedure at each of these points.
-\paragraph{Wrap up \label{sect:proc_wrapup}}
-Describe the actions necessary to terminate testing.
-\paragraph{Contingencies \label{sect:proc_contingencies}}
-Describe the actions necessary to deal with anomalous events that may occur during execution.
+This test will check:
+
+\begin{itemize}
+
+  \item{That the code delivered complies with relevant DM software quality
+  standards;}
+
+  \item{That the code is accompanied by appropriate documentation;}
+
+  \item{That the code makes use of appropriate DM interfaces to the rest of
+  the system where applicable;}
+
+  \item{That the code is appropriately tested.}
+\end{itemize}
+
+\subsection{Intercase dependencies}
+
+None.
+
+\subsubsection{Procedure}
+
+\begin{itemize}
+
+  \item{Check for the existence of a suite of unit test cases accompanying the
+  codebase;}
+
+  \item{Check the code to demonstrate that it is written in the standard LSST
+  task framework and that it uses only standardized DM interfaces to logging
+  and data access (i.e. it does not print directly to screen or perform
+  filesystem I/O within the algorithmic code);}
+
+  \item{Check that the code is accompanied by a user manual describing
+  procedures for its installation and operation.}
+
+\end{itemize}
 
 
-\newpage
+\subsection{\textsc{cppslow-ver-00-10}: CPP testing inspection}
+\label{cppslow-ver-00-10}
 
-\appendix
-\section{TRACEABILITY \label{sect:traceability}}
-The backward and forward traceability (i.e. requirements trace to a test and a test to a requirement, respectively) shall be provided in order to
-ascertain the correlations between the test cases and the requirements they fulfill.\\
+\subsubsection{Requirements}
 
-\begin{longtable}{|p{0.44\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}|
-}\hline
-{\bf SRS Requirement} & {\bf Verification Method} & {\bf Partially/Completely Verified}
-\\\hline
-\end{longtable} \normalsize
+DMS-REQ-0308.
 
-\textbf{Ruby scripts for this are available if th document is exactly like this
- template - but we may be doing this in Magic Draw .. we need to decide on
- that ..}
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That all automated test suites associated with the product pass;}
+  \item{That there are no unexpected errors or warnings from the build, test
+  or installation process.}
+
+\end{itemize}
+
+\subsection{Intercase dependencies}
+
+\hyperref[cppslow-ver-00-05]{\textsc{cppslow-ver-00-05a}}.
+
+\subsubsection{Procedure}
+
+\begin{itemize}
+
+  \item{Check the logs from the LSST CI system which was used to build and
+  package the software under test to ensure:
+
+    \begin{itemize}
+
+      \item{Successful execution of the test suite, with no failures and no
+      tests being skipped without explanatory documentation.}
+
+      \item{That there were no compiler, test, linter or other warnings
+      associated with the software build processing.}
+
+    \end{itemize}
+  }
+
+\end{itemize}
+
+
+
+
+%% NON-TESTING VERIFICATION METHODS TEST CASES
+%\subsection{Test Case \product-VER-XX-YY \label{sect:testcaseid}}
+%
+%\subsubsection{Requirements \label{sect:reqs}}
+%Specify the requirements that fulfill the test case, comma-separated and ending with '.'\\
+%e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
+%Note that the format is essential for the script that creates the traceability matrices works fine.
+%
+%\subsubsection{Test items \label{sect:tcitems}}
+%Identify and briefly describe the items and features to be exercised by this test case (e.g.:
+%\begin{itemize}
+%\item  demonstrate that an
+%specific document is written or that it contains the information required
+%\item or...
+%\item demonstrate that a parameter is set to a specific value
+%\item or...
+%\item the code is written in python3
+%\end{itemize}
+%
+%\subsubsection{Intercase dependencies \label{sect:interface_dependencies}}
+%List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
+%
+%\subsubsection{Procedure \label{sect:procedures}}
+%If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
+%case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
+%the test procedure shall be given otherwise. \\
+%
+%Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
+%up, operator intervention, output determination procedures, and special wrap up.
+
+
+
+
+
+%\section{\textsc{cppslow-fun-00}: Periodic Calibration Product Generation}
+%
+%\subsection{Objective}
+%
+%This test design verifies the production of all periodic calibration products
+%required by the \citeds{DM System Requirements}.
+%
+%
+%
+%
+%
+%% NON-TESTING VERIFICATION METHODS TEST DESIGN
+%\section{\product-VER-XX \label{sect:designid_verification}}
+%
+%\subsection{Objective \label{sect:designobj}}
+%This test design includes all the verification methods different to the dynamic testing, needed for the
+%demonstration of the fulfillment of specific requirements of the DMSR.\\
+%This includes  the requirements that do not need the execution of the software systems, but a careful document or code inspection, review
+%or analysis.
+%
+%\subsection{Features to be tested \label{sect:totest}}
+%Identify the test items and describe the features and combinations of features that are the object of this design
+%specification. E.g.:\\
+%\begin{itemize}
+%\item Demonstrate that the CU has produced an specific document (e.g. the Software Development Plan)
+%\item Demonstrate the behavior or value of an specific parameter (e.g. "As a minimum the PPN parameter shall be included in
+%the global model"
+%\item Static analysis using tools such as Findbugs or checkstyle, etc.
+%\item etc
+%\end{itemize}
+%The features to be tested depends on the content of the Software Requirements Document. Therefore the above list is just
+%an example.
+%
+%\subsection{Approach refinements \label{sect:approach}}
+%Specify the verification methods to be used to verify the features describe in the section above. These methods are
+%described in the DM SVTP \citeds{LDM-503}. E.g.:
+%\begin{itemize}
+%\item Code inspection
+%\item Document inspection
+%\item Review
+%\item Static analysis
+%\item etc
+%\end{itemize}
+%
+%\subsection{Test case identification \label{sect:testcaselist}}
+%List the identifier and a brief description of each test case associated with this design.
+%We need to agree on the identifiers here .. perhaps they come out of MD ?
+%
+%\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+%{\bf Test Case}  & {\bf Description}  \\\hline
+%\product-VER-XX-10 & design inspection \\\hline
+%\product-VER-XX-15 & Code inspection \\\hline
+%\product-VER-XX-20 & Testing review \\\hline
+%etc & \\\hline
+%\end{longtable}
+%The number and scope of the test cases depend on the requirements to be verified. The list provide above is only an example.
+%
+%\subsection{Feature pass/fail criteria}
+%Specify the specific criteria for this design to be used to determine whether the feature or feature combination has passed or failed.
+%
+%% NON-TESTING VERIFICATION METHODS TEST CASES
+%\subsection{Test Case \product-VER-XX-YY \label{sect:testcaseid}}
+%
+%\subsubsection{Requirements \label{sect:reqs}}
+%Specify the requirements that fulfill the test case, comma-separated and ending with '.'\\
+%e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
+%Note that the format is essential for the script that creates the traceability matrices works fine.
+%
+%\subsubsection{Test items \label{sect:tcitems}}
+%Identify and briefly describe the items and features to be exercised by this test case (e.g.:
+%\begin{itemize}
+%\item  demonstrate that an
+%specific document is written or that it contains the information required
+%\item or...
+%\item demonstrate that a parameter is set to a specific value
+%\item or...
+%\item the code is written in python3
+%\end{itemize}
+%
+%\subsubsection{Intercase dependencies \label{sect:interface_dependencies}}
+%List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
+%
+%\subsubsection{Procedure \label{sect:procedures}}
+%If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
+%case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
+%the test procedure shall be given otherwise. \\
+%
+%Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
+%up, operator intervention, output determination procedures, and special wrap up.
+%
+%
+%\section{\product-SCOPE-XX \label{sect:designid}}
+%
+%\subsection{Objective}
+%Specify the objective of this test design.
+%
+%\subsection{Features to be tested}
+%Identify the test items and describe the features and combinations of features that are the object of this design
+%specification. Other features may be exercised, but need not be identified.\\
+%For each feature or feature combination, a reference to its associated requirements should be included.
+%
+%\subsection{Approach refinements}
+%Specify refinements to the approach described in the test plan. Include specific test techniques to be used.
+%The method on analysis test results should be identified.\\
+%Specify the results of any analysis that provides a rationale for test case selection.\\
+%Summarize the common attributes of any test cases. This may include input constraints that must be true for every input
+%in the set of associated test cases, any shared environmental needs, any shared special procedural requirements and any
+%shared case dependencies.
+%
+%\subsection{Test case identification}
+%List the identifier and a brief description of each test case associated with this design.
+%
+%\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+%{\bf Test Case}  & {\bf Description}  \\\hline
+%\product-SCOPE-XX-YY &
+%Description of the test case \\\hline
+%\end{longtable}
+%
+%\subsection{Feature pass/fail criteria}
+%Specify the specific criteria for this design to be used to determine whether the feature or feature combination has passed or failed.
+%
+%
+%%\newpage
+%
+%%--------------------------------------------------
+%% TEST CASE SPECIFICATION
+%%--------------------------------------------------
+%%\subsection{Test Case Specification \label{sect:testcases}}
+%%Define the test cases identified by a test design specification. For each identify test case specify:
+%
+%%\newpage
+%
+%\subsection{Test Case \product-SCOPE-XX-YY}
+%
+%\subsubsection{Requirements}
+%Specify the requirements that fulfill the test cases, comma-separated and ending with '.'\\
+%e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
+%Note that the format is essential for the script that creates the traceability matrices works fine.
+%
+%\subsubsection{Test items}
+%Identify and briefly describe the items and features to be exercised by this test case.\\
+%For each item, consider supplying references to the following test item documentation: requirements specification, design
+%specification, user guide, operations guide, installation guide, etc.
+%
+%\subsubsection{Input specification \label{sect:tcinput}}
+%Specify each input required to execute the test case. Some of the inputs will be specified by value (with tolerances where
+%appropriate), while others will be specified by name.\\
+%Identify all appropriate databases, files, terminal messages, memory resident areas, and values passed by the operating system.\\
+%Specify all required relationships between inputs (e.g. timing).
+%
+%\subsubsection{Output specification \label{sect:tcoutput}}
+%Specify all the outputs and features (e.g. response time) required of the test items.
+%
+%\subsubsection{Environmental needs \label{sect:tcenvironment}}
+%\paragraph{Hardware \label{sect:tchw}}
+%Specify the characteristics and configurations of the hardware required to execute this test case.
+%\paragraph{Software \label{sect:tcsw}}
+%Specify the system and application software required to execute this test case. This may include system software such as operating
+%systems, compilers, simulators, and test tools.
+%\paragraph{Other \label{sect:tcother}}
+%Any other special requirements such as unique facility needs or specially trained personnel.
+%
+%\subsubsection{Intercase dependencies}
+%List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
+%
+%\subsubsection{Procedure}
+%If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
+%case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
+%the test procedure shall be given otherwise. \\
+%
+%Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
+%up, operator intervention, output determination procedures, and special wrap up.
+%
+%\newpage
+%
+%%-----------------------------------------
+%% PROCEDURES
+%%-----------------------------------------
+%\section{Test Procedure Specification \label{proc_spec}}
+%
+%This section could be removed if the test cases specification describe their specific procedure, i.e. the procedure is included
+%in the test case definition.
+%
+%\subsection{Introduction \label{sect:peroc_intro}}
+%The purpose is to specify the steps for executing a set of test cases or, more generally, the steps used to analyze a software in order
+%to evaluate a set of features.\\
+%For every test procedure:
+%
+%\subsection{[PROCEDURE IDENTIFIER] \label{sect:procedureid}}
+%
+%\subsubsection{Purpose \label{sect:proc_purpose}}
+%Describe the purpose of this procedure. Provide the reference of the test cases that are executed by the procedure.
+%
+%\subsubsection{Special requirements \label{sect:proc_reqs}}
+%Identify any special requirements that are necessary for the execution of this procedure. These may include prerequisite procedures,
+%special skills requirements and special environmental requirements.
+%
+%\subsubsection{Procedure steps \label{sect:proc_steps}}
+%Describe every step of each procedure execution. Include the following steps as applicable:
+%\paragraph{Log \label{sect:proc_log}}
+%Describe any special methods or format for logging the results of test execution, the incidents observed, and any other events
+%pertinent to the test.
+%\paragraph{Set up \label{sect:proc_setup}}
+%Describe the sequence of actions necessary to set up the procedure execution.
+%\paragraph{Start \label{sect:proc_start}}
+%Describe the actions necessary to begin the procedure execution.
+%\paragraph{Proceed \label{sect:proc_proceed}}
+%Describe the actions necessary during the procedure execution.
+%\paragraph{Measure \label{sect:proc_measure}}
+%Describe how the test measurements is made.
+%\paragraph{Shut down \label{sect:proc_shutdown}}
+%Describe the action necessary to suspend testing when interruption is forced by unscheduled events.
+%\paragraph{Restart \label{sect:proc_restart}}
+%Identify any procedural restart points and describe the actions necessary to restart the procedure at each of these points.
+%\paragraph{Wrap up \label{sect:proc_wrapup}}
+%Describe the actions necessary to terminate testing.
+%\paragraph{Contingencies \label{sect:proc_contingencies}}
+%Describe the actions necessary to deal with anomalous events that may occur during execution.
+%
+%
+%\newpage
+%
+%\appendix
+%\section{TRACEABILITY \label{sect:traceability}}
+%The backward and forward traceability (i.e. requirements trace to a test and a test to a requirement, respectively) shall be provided in order to
+%ascertain the correlations between the test cases and the requirements they fulfill.\\
+%
+%\begin{longtable}{|p{0.44\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}|
+%}\hline
+%{\bf SRS Requirement} & {\bf Verification Method} & {\bf Partially/Completely Verified}
+%\\\hline
+%\end{longtable} \normalsize
+%
+%\textbf{Ruby scripts for this are available if th document is exactly like this
+% template - but we may be doing this in Magic Draw .. we need to decide on
+% that ..}
 \end{document}
