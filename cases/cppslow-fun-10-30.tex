@@ -1,2 +1,61 @@
 \subsection{\textsc{cppslow-fun-10-30}: Fringe correction frame generation}
 \label{cppslow-fun-10-30}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0063,DMS-REQ-0283.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates an
+  image which corrects for detector fringing.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+\hyperref[cppslow-fun-10-20]{CPP-SLOW-FUN-10-20}.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Monochromatic flat field data cube.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{An image that corrects for fringing.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The task for generating the fringe correction frame will be executed from the
+command line, with a configuration appropriate for it to fetch required input
+data from the input Butler repository.
+
+The resulting fringe correction frame will be persisted to the output
+repository. It should be retreived from the output repository using the Butler
+and checked to ensure it contains physically plausible values (TBD by the
+Calibration Scientist).
