@@ -2,7 +2,7 @@ DOCTYPE = LDM
 DOCNUMBER = 534
 DOCNAME = $(DOCTYPE)-$(DOCNUMBER)
 
-export TEXMFHOME = ../lsst-texmf/texmf
+export TEXMFHOME = lsst-texmf/texmf
 
 # Version information extracted from git.
 GITVERSION := $(shell git log -1 --date=short --pretty=%h)
