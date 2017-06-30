@@ -1,6 +1,8 @@
 DOCTYPE = LDM
 DOCNUMBER = 534
 DOCNAME = $(DOCTYPE)-$(DOCNUMBER)
+#JOBNAME = $(DOCNAME)-$(GITVERSION)$(GITDIRTY) $(DOCNAME)
+JOBNAME = $(DOCNAME)
 
 export TEXMFHOME = lsst-texmf/texmf
 
@@ -12,12 +14,12 @@ ifneq "$(GITSTATUS)" ""
 	GITDIRTY = -dirty
 endif
 
-$(DOCNAME)-$(GITVERSION)$(GITDIRTY).pdf: $(DOCNAME).tex meta.tex
-	xelatex -jobname=$(DOCNAME)-$(GITVERSION)$(GITDIRTY) $(DOCNAME)
-	bibtex $(DOCNAME)-$(GITVERSION)$(GITDIRTY)
-	xelatex -jobname=$(DOCNAME)-$(GITVERSION)$(GITDIRTY) $(DOCNAME)
-	xelatex -jobname=$(DOCNAME)-$(GITVERSION)$(GITDIRTY) $(DOCNAME)
-	xelatex -jobname=$(DOCNAME)-$(GITVERSION)$(GITDIRTY) $(DOCNAME)
+$(JOBNAME).pdf: $(DOCNAME).tex meta.tex
+	xelatex -jobname=$(JOBNAME) $(DOCNAME)
+	bibtex $(JOBNAME)
+	xelatex -jobname=$(JOBNAME) $(DOCNAME)
+	xelatex -jobname=$(JOBNAME) $(DOCNAME)
+	xelatex -jobname=$(JOBNAME) $(DOCNAME)
 
 .FORCE:
 
