@@ -1,0 +1,25 @@
+\subsection{CPPYEAR-INT-30: Annual Calibration Product Production Integration}
+\label{cppyear-int-30}
+
+\subsubsection{Objective}
+
+This test design verifies that the annual calibration products production can
+be successfully carried out by the LSST processing control system.
+
+Note that the algorithmic and integration requirements on annual calibration
+products update are identical to those on the periodic update, which are
+verified in \hyperref[cppslow-int-20][CPPSLOW-INT-20]
+(\S\ref{cppslow-int-20}). The substantive difference over earlier
+specifications is simply in the volume of data which must be processed.
+
+\subsubsection{Approach refinements}
+
+The general approach defined in \citeds{LDM-503} is used.
+
+\subsubsection{Test case identification}
+
+\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+\textbf{Test Case}  & \textbf{Description} \\\hline
+
+\hyperref[cppyear-int-30-00]{CPPYEAR-INT-30-00} & Tests that the calibration products production system can perform an annual calibration product update.\\\hline
+\end{longtable}
