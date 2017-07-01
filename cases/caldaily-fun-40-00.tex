@@ -1,0 +1,61 @@
+\subsection{CALDAILY-FUN-40-00: Bad pixel map generation}
+\label{caldaily-fun-40-00}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0101.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That the daily calibration products update produces a report
+  describing the evolution of calibration products from night to night;}
+
+  \item{The daily calibration products report must include a broadband flat in
+  each filter.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+\begin{itemize}
+
+  \item{\hyperref[cppslow-fun-10-35]{CPPSLOW-FUN-10-35}}
+
+\end{itemize}
+
+\subsubsection{Input specification}
+
+As for \hyperref[cppslow-int-20-00]{CPPSLOW-INT-20-00}, but corresponding to
+\emph{two} nights of data acquisition.
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{A calibration report describing the evolution of the calibration
+  products between the two nights under test.}
+
+\end{itemize}
+
+\subsubsection{Procedure}
+
+The daily calibration products update pipeline is invoked for the first night
+under test, and the results persisted to an output repository.
+
+The daily calibration products update pipeline is invoked for the second night
+under test, and the results persisted to an output repository.
+
+The operator should be presented (in a form TBD) with a test report,
+describing the evolution of the calibration products from the first to the
+second night. The detailed contents of this report are TBD.
+
+The operator should verify that broadband flats, in each filter, are available
+from the output repository for both nights under test.

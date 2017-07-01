@@ -1,0 +1,26 @@
+\subsection{CALDAILY-FUN-40: Daily Calibration Product Report}
+\label{caldaily-fun-40}
+
+\subsubsection{Objective}
+
+This test design verifies that daily calibration product updates can be
+produced by the LSST processing control software.
+
+While the algorithmic components of daily calibration product updates are
+broadly the same as the periodic and annual updates (and thus are verified by
+\hyperref[cppslow-fun-10][CPPSLOW-FUN-10]), daily processing adds some new
+constraints. In this test, we verify that, in addition to the calibration
+products themselves, a report a report describing differences in the
+calibration products from night to night is also generated.
+
+\subsubsection{Approach refinements}
+
+The general approach defined in \citeds{LDM-503} is used.
+
+\subsubsection{Test case identification}
+
+\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+\textbf{Test Case}  & \textbf{Description} \\\hline
+
+\hyperref[caldaily-fun-40-00]{CALDAILY-FUN-40-00} & Test the production, and verify the contents, of the nightly calibration update report. \\\hline
+\end{longtable}
