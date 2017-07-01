@@ -1,0 +1,36 @@
+\subsection{CALDAILY-INT-50: Daily Calibration Product Production System}
+\label{caldaily-int-50}
+
+\subsubsection{Objective}
+
+The daily calibration product updates provide broadly similar algorithmic
+functionality to the periodic updates, and are thus verified by
+\hyperref[cppslow-fun-10]{CPPSLOW-FUN-10} and
+\hyperref[cppslow-int-20]{CPPSLOW-INT-20}. However, the nature of daily
+processing involves some extra constraints:
+
+\begin{itemize}
+
+  \item{The daily update is executed under the control of the Observatory
+  Control System (OCS) driven batch processing (rather than the periodic Level
+  2 serivce;}
+
+  \item{Both that report and the products themselves must be made available
+  within a limited time so that they can be used during the night's
+  processing.}
+
+\end{itemize}
+
+This test specification exists to verify these goals.
+
+\subsubsection{Approach refinements}
+
+The general approach defined in \citeds{LDM-503} is used.
+
+\subsubsection{Test case identification}
+
+\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+\textbf{Test Case}  & \textbf{Description} \\\hline
+To be written & Test the operation of calibration products production udner the control of the OCS batch processing system.\\\hline
+To be written & Demonstrate that nightly calibration products production, including the generation of the daily report, meets performance constraints.\\\hline
+\end{longtable}
