@@ -1,0 +1,72 @@
+\subsection{CPPSLOW-INT-20-10: Periodic Calibration Products Production Service}
+\label{cppslow-int-20-10}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0059,DMS-REQ-0060,DMS-REQ-0061,DMS-REQ-0062,DMS-REQ-0063,DMS-REQ-0130,DMS-REQ-0132,DMS-REQ-0265,DMS-REQ-0282,DMS-REQ-0283,DMS-REQ-0289,DMS-REQ-0294,DMS-REQ-0314,DMS-REQ-0346.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a service exists which will execute the periodic Calibration Products Production payload;}
+
+  \item{That all data products required are produced and persisted when that payload is executed;}
+
+  \item{That provenance information about the production is recorded appropriately;}
+
+  \item{That input data is retained at the end of the production.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+\begin{note}
+  Also dependent on various pieces of compute middleware and the hardware
+  system, for which test cases have not yet been written.
+\end{note}
+
+\begin{itemize}
+  \item{\hyperref[cppslow-int-20-00]{CPPSLOW-INT-20-00},}
+  \item{\hyperref[cppslow-int-20-05]{CPPSLOW-INT-20-05}.}
+\end{itemize}
+
+\subsubsection{Input specification}
+
+The same input is required as for
+\hyperref[cppslow-int-20-05]{CPPSLOW-INT-20-05}, with the additional caveat
+that the repository containing the data must be available and accessible using
+the Data Backbone.
+
+\subsubsection{Output specification}
+
+As for \hyperref[cppslow-int-20-05]{CPPSLOW-INT-20-05}, with the additional
+caveats that:
+
+\begin{itemize}
+
+  \item{Information must be persisted to the Data Backbone, not simply to a
+  locally accessible repository;}
+
+  \item{\textit{Input} data must be demontrated to remain available and
+  unchanged on the Data Backbone at the end of the test.}
+
+\end{itemize}
+
+In addition, metadata describing the provenance of the data products must be
+recorded and made available for inspection.
+
+\subsubsection{Procedure}
+
+A periodic calibration products production is scheduled and executed using the
+Template \& Calibration Products Periodic Execution Service
+(\citeds{LDM-148}).
+
+The operator will monitor system logs and check for successful execution of
+the service.
+
+At the end of the service, all products specified in the output specification
+above must be accessible on the Data Backbone. They should be retrieved and
+checked for validity by the operator (or designated representative).

@@ -1,0 +1,91 @@
+\subsection{CPPSLOW-INT-20-00: Manual Calibration Products Production Execution}
+\label{cppslow-int-20-00}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0059,DMS-REQ-0060,DMS-REQ-0061,DMS-REQ-0062,DMS-REQ-0063,DMS-REQ-0130,DMS-REQ-0282,DMS-REQ-0283,DMS-REQ-0289,DMS-REQ-0308.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a single point of entry exists, in the form of a command line
+  task or equivalent tool, which provides all the necessary functionality and
+  configuration to perform a periodic calibration products production.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+Generating a complete set of calibration products depends on successful
+completion of:
+
+\begin{itemize}
+
+  \item{\hyperref[cppslow-ver-00-00]{CPPSLOW-VER-00-00}}
+  \item{\hyperref[cppslow-ver-00-05]{CPPSLOW-VER-00-05}}
+  \item{\hyperref[cppslow-ver-00-10]{CPPSLOW-VER-00-10}}
+  \item{\hyperref[cppslow-fun-10-00]{CPPSLOW-FUN-10-00}}
+  \item{\hyperref[cppslow-fun-10-05]{CPPSLOW-FUN-10-05}}
+  \item{\hyperref[cppslow-fun-10-10]{CPPSLOW-FUN-10-10}}
+  \item{\hyperref[cppslow-fun-10-15]{CPPSLOW-FUN-10-15}}
+  \item{\hyperref[cppslow-fun-10-20]{CPPSLOW-FUN-10-20}}
+  \item{\hyperref[cppslow-fun-10-25]{CPPSLOW-FUN-10-25}}
+  \item{\hyperref[cppslow-fun-10-30]{CPPSLOW-FUN-10-30}}
+  \item{\hyperref[cppslow-fun-10-35]{CPPSLOW-FUN-10-35}}
+
+\end{itemize}
+
+However, this test case may also be executed at intermediate stages during
+construction to test the production of only a limited set of calibration
+products, and the dependency list may be reduced as appropraite.
+
+\subsubsection{Input specification}
+
+A Butler data repository with all required inputs for the calibration products
+production loaded. This includes:
+
+\begin{itemize}
+
+  \item{Dark frames corresponding to the CCDs under test;}
+  \item{Flat field frames corresponding to the CCDs under test;}
+  \item{Pocket pumping exposures corresponding to the CCDs under test;}
+  \item{Zero-second exposures of the CCDs under test;}
+  \item{Collimated Beam Projector observations per \citeds{LDM-151} \S4.2.10;}
+  \item{Monochromatic flat field images corresponding to the CCDs under test.}
+
+\end{itemize}
+
+In addition, a pipeline configuration will be specified which includes details
+of the input repository and (if necessary) any configuration overrides
+required to process the data under test\footnote{The default pipeline
+configuration should be appropriate for full LSST camera images, but may need
+adjusting to match the test conditions or input data source.}.
+
+\subsubsection{Output specification}
+
+A Butler data repository should be populated with all the required period
+Calibration Products Production data products, to include:
+
+\begin{itemize}
+
+  \item{Bad pixel lists;}
+  \item{Bias images;}
+  \item{Crosstalk correction matrices;}
+  \item{Illumination correction frames;}
+  \item{Monochromatic flat field data cubes;}
+  \item{Broad-band synthetic flats;}
+  \item{Dark current correction frames;}
+  \item{Fringe correction frames.}
+
+\end{itemize}
+
+\subsubsection{Procedure}
+
+The Calibration Products Pipeline will be invoked manually from the command
+line, being provided with the configuration file needed.
+
+At the end of processing, all of the outputs specified shall be available for
+retrieval from the Butler data repository.

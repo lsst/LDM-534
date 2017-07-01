@@ -1,0 +1,63 @@
+\subsection{CPPSLOW-FUN-10-35: Synthetic broadband flat generation}
+\label{cppslow-fun-10-35}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0130.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates a
+  synthetic broad-band flat for each filter in use with the LSST system.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+\hyperref[cppslow-fun-10-20]{CPPSLOW-FUN-10-20}.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Monochromatic flat field data cube covering all filters.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{One synthetic broadband flat field image for the CCD being tested for
+  each filter.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The task (or tasks, if one per filter; final design TBD) for generating the
+broadband synthetic flat field image will be executed from the command
+line, with a configuration appropriate for it to fetch required input data
+from the input Butler repository.
+
+The resulting broadband synthetic flats will be persisted to the output
+repository. They should be retreived from the output repository using the
+Butler and checked to ensure they contain physically plausible values (TBD by
+the Calibration Scientist).

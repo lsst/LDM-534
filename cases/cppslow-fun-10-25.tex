@@ -1,0 +1,71 @@
+\subsection{CPPSLOW-FUN-10-25: Dark current correction frame generation}
+\label{cppslow-fun-10-25}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0063,DMS-REQ-0282.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates a
+  coadded dark current correction image.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+\begin{note}
+LDM-151 notes that we need to perform standard ISR on the darks
+before combining them, so that likely means a call out to a single frame/ISR
+test case when it exists.
+\end{note}
+
+\hyperref[cppslow-fun-10-05]{CPPSLOW-FUN-10-05}.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Multiple individual dark exposures of a single CCD with exposure times
+  of 300\,s.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{A coadded dark current correction frame.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The instrument signature removal code will be run on the individual input
+exposures from the command line, and the results persisted to a data
+repository.
+
+The task for generating the coadded dark current correction frame will be
+executed from the command line, and the results persisted to a further data
+repository.
+
+The Butler will be used to retrieve the flat field data cube from the output
+repository, and the contents checked to ensure they are physically plausible
+(values TBD by the Calibration Scientist.)

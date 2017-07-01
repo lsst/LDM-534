@@ -1,0 +1,44 @@
+\subsection{CPPSLOW-VER-00-05: CPP code inspection}
+\label{cppslow-ver-00-05}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0132,DMS-REQ-0158,DMS-REQ-0308.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That the code delivered complies with relevant DM software quality
+  standards;}
+
+  \item{That the code is accompanied by appropriate documentation;}
+
+  \item{That the code makes use of appropriate DM interfaces to the rest of
+  the system where applicable;}
+
+  \item{That the code is appropriately tested.}
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+None.
+
+\subsubsection{Procedure}
+
+\begin{itemize}
+
+  \item{Check for the existence of a suite of unit test cases accompanying the
+  codebase;}
+
+  \item{Check the code to demonstrate that it is written in the standard LSST
+  task framework and that it uses only standardized DM interfaces to logging
+  and data access (i.e. it does not print directly to screen or perform
+  filesystem I/O within the algorithmic code);}
+
+  \item{Check that the code is accompanied by a user manual describing
+  procedures for its installation and operation.}
+
+\end{itemize}

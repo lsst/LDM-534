@@ -1,0 +1,64 @@
+\subsection{CPPSLOW-FUN-10-15: Illumination correction frame generation}
+\label{cppslow-fun-10-15}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0062,DMS-REQ-0130.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates an
+  image that corrects for the non-uniform illumination of the flat field
+  screen.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+None.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Collimated Beam Projector (CBP) images as specified in \citeds{LDM-151}
+  \S4.2.10.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{An illumination correction image.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The task for generating the illumination correction frame will be executed from the
+command line, with a configuration appropriate for it to fetch required input
+data from the input Butler repository.
+
+The resulting illumination correction image will be persisted to the output
+repository. It should be retrieved from the output repository using the Butler
+and checked to ensure it contains physically plausible values (TBD by the
+Calibration Scientist; ultimately, per \citeds{LSE-61}, it will be verified by
+application to operational data).

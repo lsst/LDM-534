@@ -1,0 +1,78 @@
+\subsection{CPPSLOW-FUN-10-00: Bad pixel map generation}
+\label{cppslow-fun-10-00}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0059,DMS-REQ-0130.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates a list
+  of ``bad'' (unusable) pixels for one or more CCDs.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+None.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required to generate an appropriate list of
+bad pixels will require further thought \& input from the Calibration Scientist;
+this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{A pre-existing list of known-bad pixels for the CCD under test. This is a Camera Team
+  deliverable from sensor acceptance testing.}
+
+  \item{Dark frames corresponding to the CCD under test. (How many? Where from —
+  do they need to be on sky, or can we generated them from the test stand?)}
+
+  \item{Flat field frames corresponding to the CCD under test. (How many? Where from —
+  do they need to be on sky, or can we generated them from the test stand?)}
+
+  \item{``Pocket pumping'' exposures corresponding to the CCD under test.  (How
+  many? Where from — do they need to be on sky, or can we generated them from
+  the test stand?)}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{A list of bad pixels in the CCD under test.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The task for generating bad pixel masks will be executed from the command line,
+with a configuration appropriate for it to fetch required input data from the
+input Butler repository.
+
+The resulting bad pixel list will be persisted to the output repository. To
+check for correctness, it should be:
+
+\begin{itemize}
+
+  \item{Compared to the initial list of bad pixels provided by the Camera Team;}
+  \item{Optionally overplotted on the input data for manual inspection.}
+
+\end{itemize}

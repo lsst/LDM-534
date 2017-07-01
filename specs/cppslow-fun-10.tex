@@ -1,0 +1,51 @@
+\subsection{CPPSLOW-FUN-10: Periodic Calibration Product Production Data Products}
+\label{cppslow-fun-10}
+
+\subsubsection{Objective}
+
+This test design verifies the existence of algorithms for generating of all
+periodic calibration products required by the \citeds[DM System
+Requirements]{LSE-61}. These include:
+
+\begin{itemize}
+
+  \item{Bad pixel maps;}
+  \item{Bias residual images;}
+  \item{Crosstalk correction matrices;}
+  \item{Illumination correction frames;}
+  \item{Monochromatic flat fields;}
+  \item{Dark current correction frames;}
+  \item{Fringe correction frames.}
+
+\end{itemize}
+
+Note that the tests described in this section apply to all perioically
+executed calibration products production payloads, regardless of cadence (the
+same codebase will be used for daily updates and annual calibration products
+production).
+
+These tests demonstrate the existence of functional algorithms which calculate
+the required products; they are not intended to demonstrate the operation of
+an integrated calibration products production system.
+
+\subsubsection{Approach refinements}
+
+The general approach defined in \citeds{LDM-503} is used.
+
+The primary test method is to execute the relevant pipeline tasks on some
+sample input dataset and to demonstrate that an appropriate output dataset is
+produced.
+
+\subsubsection{Test case identification}
+
+\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
+\textbf{Test Case}  & \textbf{Description} \\\hline
+\hyperref[cppslow-fun-10-00]{CPPSLOW-FUN-10-00} & Bad pixel map generation \\\hline
+\hyperref[cppslow-fun-10-05]{CPPSLOW-FUN-10-05} & Bias residual image generation \\\hline
+\hyperref[cppslow-fun-10-10]{CPPSLOW-FUN-10-10} & Crosstalk correction matrix generation \\\hline
+\hyperref[cppslow-fun-10-15]{CPPSLOW-FUN-10-15} & Illumination correction frame generation \\\hline
+\hyperref[cppslow-fun-10-20]{CPPSLOW-FUN-10-20} & Monochromatic flat field generation \\\hline
+\hyperref[cppslow-fun-10-25]{CPPSLOW-FUN-10-25} & Dark current correction frame generation \\\hline
+\hyperref[cppslow-fun-10-30]{CPPSLOW-FUN-10-30} & Fringe correction frame generation \\\hline
+\hyperref[cppslow-fun-10-35]{CPPSLOW-FUN-10-35} & Synthetic broadband flat generation \\\hline
+\end{longtable}

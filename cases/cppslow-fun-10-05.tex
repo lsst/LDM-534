@@ -1,0 +1,61 @@
+\subsection{CPPSLOW-FUN-10-05: Bias residual image generation}
+\label{cppslow-fun-10-05}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0060,DMS-REQ-0130.
+
+\subsubsection{Test items}
+
+This test will check:
+
+\begin{itemize}
+
+  \item{That a pipeline task (or equivalent tool) exists which generates a
+  master image which can be used to correct for temporally stable bias structure
+  in data from a CCD.}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+None.
+
+\subsubsection{Input specification}
+
+\begin{note}
+Detailed specification of the inputs required will require further thought \&
+input from the Calibration Scientist; this is a work in progress.
+\end{note}
+
+\begin{itemize}
+
+  \item{Multiple (how many?) zero-second exposures of the CCD under test.}
+
+\end{itemize}
+
+These products should be available within a Butler repository accessible
+through the regular LSST data access framework from the system on which the test
+is being run.
+
+\subsubsection{Output specification}
+
+\begin{itemize}
+
+  \item{A master bias residual image.}
+
+\end{itemize}
+
+These products should be persisted to a Butler repository accessible through
+the regular LSST data access framework from the system on which the test is
+being run.
+
+\subsubsection{Procedure}
+
+The task for generating the master bias residual image will be executed from the
+command line, with a configuration appropriate for it to fetch required input
+data from the input Butler repository.
+
+The resulting master bias will be persisted to the output repository. It should
+be retrieved from the output repository using the Butler and checked to ensure
+it contains physically plausible values (TBD by the Calibration Scientist).
