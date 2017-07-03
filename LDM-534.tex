@@ -4,35 +4,30 @@
 
 \begin{document}
 
-%set the WP number or product here for the requirements
 \def\product{LSST Level 2 System}
 
 \setDocCompact{true}
 
-%Product name first in title
 \title[STS for \product]{\product~Software Test Specification}
 
 \author{John D. Swinbank}
 \setDocRef{\lsstDocType-\lsstDocNum}
 \setDocDate{\vcsdate}
-%
-% a short abstract
-%
+
 \setDocAbstract {
 This document describes the detailed test specification for the \product{}.
 }
 
-%
-% the title page
-%
-\maketitle
-
-%
-%	Revision history MOST RECENT FIRST
-%
+% Most recent last
 \setDocChangeRecord{%
 	\addtohist{1}{\vcsdate}{Initial release.}{JDS}
 }
+
+\setDocCurator{John D. Swinbank}
+\setDocUpstreamLocation{\url{https://github.com/lsst/ldm-534}}
+\setDocUpstreamVersion{\vcsrevision}
+
+\maketitle
 
 \section{Introduction}
 \label{sec:intro}
