@@ -8,7 +8,7 @@
 
 \setDocCompact{true}
 
-\title[STS for \product]{\product~Software Test Specification}
+\title[Test Spec for \product]{\product~Test Specification}
 
 \author{John D. Swinbank}
 \setDocRef{\lsstDocType-\lsstDocNum}
@@ -50,6 +50,10 @@ scientific processing leading to:
 
 \end{itemize}
 
+A full description of this product is provided in \S\S7 (which describes the
+Data Facility provided execution services) and 13.1 (the science payloads) of
+\citeds{LDM-148}.
+
 \subsection{Objectives}
 \label{sec:objectives}
 
@@ -68,14 +72,25 @@ the LSST system (as described in \citeds{LDM-148}):
 
 \begin{itemize}
 
-  \item{Annual Calibration}
-  \item{Daily Calibration Update}
-  \item{Data Release Production}
-  \item{Periodic Calibration}
-  \item{Raw Calibration}
-  \item{Science Algorithms (partial)}
-  \item{Science Primitives (partial)}
-  \item{Template Generation}
+  \item{Services provided by the LSST Data Facility:
+
+    \begin{itemize}
+      \item{Template and Calibration Products Production Execution}
+      \item{Data Release Production Execution}
+      \item{Level 2 Quality Control}
+    \end{itemize}
+  }
+
+  \item{Science payloads:
+
+    \begin{itemize}
+      \item{Annual Calibration Products Production Payload}
+      \item{Data Release Production Payload}
+      \item{Periodic Calibration Products Production Payload}
+      \item{Template Generation Payload}
+    \end{itemize}
+
+  }
 
 \end{itemize}
 
@@ -85,6 +100,7 @@ the LSST system (as described in \citeds{LDM-148}):
 \addtocounter{table}{-1}
 
 \begin{tabular}[htb]{l l}
+\citeds{LDM-148} & LSST DM System Architecture \\
 \citeds{LDM-151} & LSST DM Science Pipelines Design \\
 \citeds{LDM-294} & LSST DM Organization \& Management \\
 \citeds{LDM-502} & The Measurement and Verification of DM Key Performance Metrics \\
@@ -155,15 +171,20 @@ The following are the major items under test:
 
 \begin{itemize}
 
-  \item{Science payloads capable of generating all LSST Level 2 data
+  \item{The science payload capable of generating all LSST annual data
   products;}
 
   \item{Calibration products payloads, run at a variety of cadences, to
-  generate all calibration products required in the generation of LSST Level 1
-  and 2 data products;}
+  generate calibration products required in the generation of LSST nightly and
+  annual data products;}
 
-  \item{Template generation payloads capable of generating deep templates
-  required for difference imaging in the context of the LSST Level 1 system.}
+  \item{The template generation payload capable of generating deep templates
+  required for difference imaging in the context of both nightly and annual
+  processing.}
+
+  \item{Services capable of scheduling and managing the execution of all of
+  the above payloads, marshalling their results, and making them available to
+  other parts of the system for analysis or further distribution.}
 
 \end{itemize}
 
@@ -173,27 +194,20 @@ The following are the major items under test:
 \begin{itemize}
 
   \item{Execution of payloads described in \S\ref{sec:tasks};}
-  \item{Persistence of all required data products.}
+  \item{Persistence of all required data products;}
+  \item{Scientific fidelity of those data products: do they satisfy the
+  requirements described in \citeds{LSE-61}?}
 
 \end{itemize}
-
 
 \subsection{Features not to be tested}
 \label{sec:featnot2test}
 
-This version of the \product{} test specification addresses only the functional
-requirements of the systems under test, as derived from the DM System
-Requirements (\citeds{LSE-61}).
-
-A further set of requirements which describe the scientific fidelity of the
-output data products are not tested in this version of this test
-specification pending flow-down to \citeds{LSE-61}.
-
-The progress of the DM system towards satisfying the scientific requirements
-on LSST's data products is tracked by means of a series of Key Performance
-Metrics (KPMs) derived from high-level requirements documents (\citeds{LPM-17,
-LSE-29, LSE-30}). The system being used to track KPMs and to ensure compliance
-with these requirements is described in \citeds{LDM-502}.
+This document does not describe facilities for periodically generating or
+collecting key performance metrics (KPMs), except insofar as those KPMs are
+incidentally measured as part of executing the documented testcases. The KPMs
+and the system being used to track KPMs and to ensure compliance with
+documented requirements is described in \citeds{LDM-502}.
 
 \subsection{Pass/fail criteria}
 \label{sec:passfail}
@@ -214,37 +228,18 @@ Refer to individual test cases where applicable.
 
 \subsection{Naming convention}
 
-All tests are named according to the pattern prod-scope-xx-yy where:
+All tests are named according to the pattern \textsc{prod-xx-yy} where:
 
 \begin{description}[font=\normalfont\scshape]
 
-  \item[prod]{The product code, per \citeds{LDM-294}. Relevant entries for this document are:
+  \item{prod}{The product under test. Relevant entries for this document are:
     \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
-      \item[caldaily]{Daily CPP payload}
-      \item[cppslow]{Periodic CPP payload}
-      \item[cppyear]{Annual CPP payload}
-      \item[tmplgen]{Template generation payload}
-      \item[cppqc]{CPP QC measurement generators}
-      \item[drp]{Annual mini-DRP and DRP payload}
-      \item[l2qc]{L2 QC measurement generators}
-      \item[cppqc]{CPP QC measurement generators}
+      \item[DRP]{The Data Release Production payload and associated service}
+      \item[CPP]{The Calibration Products Production payload and associated services}
+      \item[TMP]{The Template Generation payload and associated service}
     \end{description}
   }
-  \item[scope]{The type of test being described:
-    \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
-      \item[acp]{Acceptance}
-      \item[bck]{Backup and restore}
-      \item[fun]{Functional}
-      \item[ins]{Installation}
-      \item[int]{Integration}
-      \item[itf]{Interface}
-      \item[mnt]{Maintenance}
-      \item[prf]{Performance}
-      \item[reg]{Regression}
-      \item[ver]{Verification}
-    \end{description}
-  }
-  \item[xx]{Test design number (in increments of 10)}
+  \item[xx]{Test specification number (in increments of 10)}
   \item[yy]{Test case number (in increments of 5)}
 
 \end{description}
