@@ -1,0 +1,86 @@
+\subsection{DRP-00-35: Scientific Verification of Processed Visit Images}
+\label{drp-00-35}
+
+\subsubsection{Requirements}
+
+DMS-REQ-0334, DMS-REQ-0279, DMS-REQ-0278, DMS-REQ-0047.
+
+\subsubsection{Test items}
+\label{drp-00-35-items}
+
+This test will check that the coadded images  delivered by the DRP science
+payload meet the requirements laid down by \citeds{LSE-61}.
+
+Specifically, this will demonstrate that:
+
+\begin{itemize}
+
+  \item{Coadds have been generated and persisted during payload execution;}
+  \item{Each coadd provides a spatially varying PSF model (DMS-REQ-0047).}
+  \item{..... science V\&V .....}
+
+\end{itemize}
+
+\subsubsection{Intercase dependencies}
+
+\begin{itemize}
+
+  \item{\hyperref[drp-00-00]{DRP-00-00}}
+  \item{\hyperref[drp-00-10]{DRP-00-10}}
+
+\end{itemize}
+
+\subsubsection{Environmental needs}
+
+\paragraph{Hardware}
+
+The test shall be carried out on a machine with at least 16\,GB of RAM and
+multiple CPU cores which has access to the \texttt{/datasets} shared (GPFS)
+filesystem at the LSST Data Facility.
+
+\paragraph{Software}
+
+Release 14.0 of the DM Software Stack will be pre-installed (following the
+procedure described in \hyperref[drp-00-00]{DRP-00-00}).
+
+\subsubsection{Input specification}
+
+A complete processing of the Hyper Suprime-Cam ``RC2'' dataset, as defined
+at ...
+
+\begin{note}
+This dataset is currently being defined in DM-11345. We need to make sure the
+results of that ticket are clearly published somewhere to complete this test
+spec.
+
+\end{note}
+
+... through the DRP Science Payload.
+
+This dataset shall be made available in a standard LSST data repository,
+accessible via the ``Data Butler''.
+
+It is not required that all combinations of visit and CCD have been processed
+successfully: a number of failures are expected. However, documentation to
+describe processing failures should be provided.
+
+\subsubsection{Output specification}
+
+None.
+
+\subsubsection{Procedure}
+
+\begin{itemize}
+
+  \item{The DM Stack shall be initialized using the \texttt{loadLSST} script
+  (as described in \hyperref[drp-00-00]{DRP-00-00}).}
+
+  \item{A ``Data Butler'' will be initialized to access the repository.}
+
+  \item{For each combination of tract/patch/filter, the PVI will be retrieved
+  from the Butler, and the existence of all components described in
+  \S\ref{drp-00-30-items} will be verified.}
+
+  \item{...Science V\&V ....}
+
+\end{itemize}
