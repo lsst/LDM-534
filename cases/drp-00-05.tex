@@ -4,16 +4,22 @@
 \subsubsection{Requirements}
 
 DMS-REQ-0293,DMS-REQ-0294.
+%DMS-REQ-0299,DMS-REQ-0298
+DMS-REQ-0302,DMS-REQ-0303,DMS-REQ-0305
 
 \subsubsection{Test items}
 
-This test will check:
+This test will check that the DRP Science Payload can be executed using the current state-of-the-art execution service provided by the LSST Data Facility.
+
+Specifically, this will demonstrate that:
 
 \begin{itemize}
 
-  \item{That the DRP Science Payload can be executed using the current
-  state-of-the-art execution service provided by the LSST Data Facility.}
-
+  \item{A selection of dataset can be identified, retrieved, and processed (DMS-REQ-0293).}
+  \item{Selected datasets can be processed through selected Data Release Production science payload using a prototype of the production system. Processed results will be recorded (DMS-REQ-0294).}
+  \item{The software can orchestrate execution of the pipelines on LSST-VC compute nodes (DMS-REQ-0302).}
+  \item{The software can monitor the status of pipeline execution (DMS-REQ-0303).}
+  \item{The sequence of the pipeline tasks can be defined without recompilation for the execution (DMS-REQ-0305).}
 \end{itemize}
 
 \subsubsection{Intercase dependencies}
@@ -28,30 +34,39 @@ This test will check:
 
 \paragraph{Hardware}
 
-\begin{note}
-Data Facility to provide content.
-\end{note}
+This test case shall be executed on a system at NCSA.
+We assume that this system will be the LSST Verification Cluster (LSST-VC),
+with access to the GPFS shared filesystem and an Oracle database system.
 
 \paragraph{Software}
 
-\begin{note}
-Data Facility to provide content.
-\end{note}
+The DESDM Framework packages 1.01 and the Release 14.0 of the DM Software Stack will be pre-installed. The Python 2 version will be used.
 
 \subsubsection{Input specification}
 
-\begin{note}
-Data Facility to provide content.
-\end{note}
+At least one tract of the Hyper Suprime-Cam "RC" dataset, as defined in DMTR-31, will be used.
+The calibration dataset will be the 20170105 version, as in DMTR-31.
+
 
 \subsubsection{Output specification}
 
-\begin{note}
-Data Facility to provide content.
-\end{note}
+The output data products will be made available on a shared filesystem accessible at LSST-VC and files are managed by a prototype Data Backbone.
 
 \subsubsection{Procedure}
 
-\begin{note}
-Data Facility to provide content.
-\end{note}
+\begin{enumerate}
+
+  \item{Release 14.0 of the LSST Science Pipelines and Tag 1.01 of the DESDM Framework, plugins, and integration code will be installed into the GPFS filesystem at \texttt{/project/production/} on LSST-VC. The packages can be setup by the operator.}
+  \item{Input raw and calibration data will be made acessible on the GPFS filesystem, and registered into the prototype Data Backbone.}
+  \item{Given the LSST Science Pipelines version, the operator will prerun the pipelines to create the full config files and schema files, which are then ingested into the prototype Data Backbone.}
+  \item{The pipeline workflow definition file (wcl) version 1.01 will be downloaded; its operations- and dataset-specific inputs will be modified accordingly.}
+  \item{For each tract of the input data, the corresponding wcl file will be submitted to execution on LSST-VC.}
+  \item{During exeuction, the "desstat" command will be run to demonstrate the ability to check the processing status.}
+  \item{When the execution finishes, the success of the execution will be verified by checking the existence of the expected output data.
+  For each of the expected data products types (listed in \S\ref{drp-00-10-items})
+  and each of the expected units (PVIs, coadds, etc), the data product will be
+  verified to be non-empty.}
+  \item{A brief summary of the execution metrics, such as the number of executions of each executable, execution time usage, etc. will be gathered and examined.}
+  \item{The database will be queried to obtain the count of the files. The number will be cross-checked with the filesystem as a consistency verification.}
+
+\end{enumerate}
