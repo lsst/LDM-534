@@ -38,11 +38,13 @@ This test case shall be executed on a system at NCSA.
 We assume that this system will be the LSST Verification Cluster (LSST-VC),
 with access to the GPFS shared filesystem and an Oracle database system.
 
-\paragraph{Software}
+\paragraph{Software}\label{sec:software}
 
 The DESDM Framework packages 1.01 and the Release 14.0 of the DM Software Stack will be pre-installed. The Python 2 version will be used.
+The ticket branch \texttt{tickets/DM-12291} of the Software Stack packages \texttt{meas{\_}base}, \texttt{pipe{\_}tasks}, and \texttt{obs{\_}subaru} will be used to change the patch ID naming convention.
+This is due to issues of having commas in the filenames and data IDs, as discussed in \jira{RFC-361}; the solution has been agreed in \jira{RFC-365} for future implementation in \jira{DM-11874}, \jira{DM-11875}, and \jira{DM-11876}.
 
-\subsubsection{Input specification}
+\subsubsection{Input specification}\label{sec:input}
 
 At least one tract of the Hyper Suprime-Cam "RC" dataset, as defined in DMTR-31, will be used.
 The calibration dataset will be the 20170105 version, as in DMTR-31.
@@ -56,8 +58,8 @@ The output data products will be made available on a shared filesystem accessibl
 
 \begin{enumerate}
 
-  \item{Release 14.0 of the LSST Science Pipelines and Tag 1.01 of the DESDM Framework, plugins, and integration code will be installed into the GPFS filesystem at \texttt{/project/production/} on LSST-VC. The packages can be setup by the operator.}
-  \item{Input raw and calibration data will be made acessible on the GPFS filesystem, and registered into the prototype Data Backbone.}
+  \item{The LSST Science Pipelines and the DESDM Framework, plugins, and integration code as described in \S\ref{sec:software}  will be installed into the GPFS filesystem at \texttt{/project/production/} on LSST-VC. The packages will be setup by the operator.}
+  \item{Input raw and calibration data will be made acessible on the GPFS filesystem, and registered into the prototype Data Backbone. The input dataset selected in \S\ref{sec:input} will be tagged.}
   \item{Given the LSST Science Pipelines version, the operator will prerun the pipelines to create the full config files and schema files, which are then ingested into the prototype Data Backbone.}
   \item{The pipeline workflow definition file (wcl) version 1.01 will be downloaded; its operations- and dataset-specific inputs will be modified accordingly.}
   \item{For each tract of the input data, the corresponding wcl file will be submitted to execution on LSST-VC.}
