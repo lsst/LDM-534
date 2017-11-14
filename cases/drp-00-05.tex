@@ -50,15 +50,18 @@ user-specified criteria exactly once. (DMS-REQ-0307).}
 
 \subsubsection{Environmental needs}
 
-\paragraph{Hardware}
+\paragraph{Hardware}\label{sec:hardware}
 
 This test case shall be executed on a system at NCSA.
-We assume that this system will be the LSST Verification Cluster (LSST-VC),
+
+For Fall 2017, we assume that this system will be the LSST Verification Cluster (LSST-VC),
 with access to the GPFS shared filesystem and an Oracle database system.
 
 \paragraph{Software}\label{sec:software}
+The DM Software Stack and the DESDM Framework packages will be pre-installed.
 
-The DESDM Framework packages 1.01 and the Release 14.0 of the DM Software Stack will be pre-installed. The Python 2 version will be used.
+For Fall 2017, the version of the DM Software Stack will be Release 14.0, and the version of the DESDM Framework packages, plugins, and integration code will be 1.01.
+The Python 2 version will be used.
 The ticket branch \texttt{tickets/DM-12291} of the Software Stack packages \texttt{meas{\_}base}, \texttt{pipe{\_}tasks}, and \texttt{obs{\_}subaru} will be used to change the patch ID naming convention.
 This is due to issues of having commas in the filenames and data IDs, as discussed in \jira{RFC-361}; the solution has been agreed in \jira{RFC-365} for future implementation in \jira{DM-11874}, \jira{DM-11875}, and \jira{DM-11876}.
 
@@ -70,23 +73,44 @@ The calibration dataset will be the 20170105 version, as in DMTR-31.
 
 \subsubsection{Output specification}
 
-The output data products will be made available on a shared filesystem accessible at LSST-VC and files are managed by a prototype Data Backbone.
+The output data products will be made available on a shared filesystem accessible at LSST-VC and files are managed by Data Backbone.
 
 \subsubsection{Procedure}
 
+\paragraph{Setup}
 \begin{enumerate}
 
-  \item{The LSST Science Pipelines and the DESDM Framework, plugins, and integration code as described in \S\ref{sec:software}  will be installed into the GPFS filesystem at \texttt{/project/production/} on LSST-VC. The packages will be setup by the operator.}
-  \item{Input raw and calibration data will be made acessible on the GPFS filesystem, and registered into the prototype Data Backbone. The input dataset selected in \S\ref{sec:input} will be tagged.}
-  \item{Given the LSST Science Pipelines version, the operator will prerun the pipelines to create the full config files and schema files, which are then ingested into the prototype Data Backbone.}
-  \item{The pipeline workflow definition file (wcl) version 1.01 will be downloaded; its operations- and dataset-specific inputs will be modified accordingly.}
-  \item{For each tract of the input data, the corresponding wcl file will be submitted to execution on LSST-VC.}
-  \item{During exeuction, the "desstat" command will be run to demonstrate the ability to check the processing status.}
+  \item{The LSST Science Pipelines and the DESDM Framework, plugins, and integration code as described in \S\ref{sec:software}  will be installed and setup by the operator.}
+  \begin{enumerate}
+    \item{For Fall 2017, the software will be installed into the GPFS space at \texttt{/project/production/} on LSST-VC.}
+  \end{enumerate}
+  \item{Input raw and calibration data must exist in the Data Backbone. If not, the data will be ingested into Data Backbone.  The input dataset selected in \S\ref{sec:input} will be tagged.}
+  \begin{enumerate}
+    \item{For Fall 2017, the prototype Data Backbone is acessible on the GPFS filesystem on LSST-VC.}
+  \end{enumerate}
+  \item{Given the LSST Science Pipelines version, the operator will generate the full config files and schema files, which are then ingested into the prototype Data Backbone.}
+  \item{The pipeline workflow definition file of a consistent version will be downloaded; its operations- and dataset-specific inputs will be modified accordingly.}
+  \begin{enumerate}
+    \item{For Fall 2017, the pipeline workflow definition file is a "wcl" file as used by the DESDM Framework Software.}
+  \end{enumerate}
+\end{enumerate}
+
+\paragraph{Execution}
+\begin{enumerate}
+  \item{The execution for each tract of the input data in \S\ref{sec:input} will be submitted to the hardware in \S\ref{sec:hardware}.}
+  \item{During exeuction, the operator will use software to demonstrate its ability to check the processing status.}
+\end{enumerate}
+
+\paragraph{Non-science QA}
+\begin{enumerate}
   \item{When the execution finishes, the success of the execution will be verified by checking the existence of the expected output data.
   For each of the expected data products types (listed in \S\ref{drp-00-10-items})
   and each of the expected units (PVIs, coadds, etc), the data product will be
   verified to be non-empty.}
   \item{A brief summary of the execution metrics, such as the number of executions of each executable, execution time usage, etc. will be gathered and examined.}
   \item{The database will be queried to obtain the count of the files. The number will be cross-checked with the filesystem as a consistency verification.}
-
+\end{enumerate}
+\paragraph{First-order Science QA}
+\begin{enumerate}
+  \item{Production Scientist will perform first-order science quality assurance.}
 \end{enumerate}
