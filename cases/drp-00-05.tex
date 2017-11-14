@@ -3,9 +3,15 @@
 
 \subsubsection{Requirements}
 
+%
 DMS-REQ-0293,DMS-REQ-0294.
-%DMS-REQ-0299,DMS-REQ-0298
 DMS-REQ-0302,DMS-REQ-0303,DMS-REQ-0305
+%
+DMS-REQ-0106,
+DMS-REQ-0304,DMS-REQ-0306,DMS-REQ-0307,
+% ?
+DMS-REQ-0299,DMS-REQ-0298
+DMS-REQ-0292,DMS-REQ-0295,
 
 \subsubsection{Test items}
 
@@ -20,6 +26,18 @@ Specifically, this will demonstrate that:
   \item{The software can orchestrate execution of the pipelines on LSST-VC compute nodes (DMS-REQ-0302).}
   \item{The software can monitor the status of pipeline execution (DMS-REQ-0303).}
   \item{The sequence of the pipeline tasks can be defined without recompilation for the execution (DMS-REQ-0305).}
+
+  \item{The provenance and metadata of the data products, such as the list of input images for the coadded images and how to recreate the data, shall be stored (DMS-REQ-0106).}
+  \item{The software can detect faults in pipeline execution and recover when possible (DMS-REQ-0304).}
+  \item{The software can define, override components of, and verify the suitability of the configuration for a task. (DMS-REQ-0306).}
+  \item{The software can enable applications process every record in a table meeting
+user-specified criteria exactly once. (DMS-REQ-0307).}
+% Seems more for the DAC?
+  \item{The software can ingest data products into the Science Data Archive (DMS-REQ-0299).}
+  \item{The software can list and retrieve image, file, and catalog data products and their associated metadata and provenance (DMS-REQ-0298).}
+  \item{All IDs shall be unique across data releases databases (DMS-REQ-0292).}
+  \item{The software can allow retrieval by productions or science users of datasets from any Facility without requiring reconfiguration (DMS-REQ-0295).}
+
 \end{itemize}
 
 \subsubsection{Intercase dependencies}
