@@ -3,29 +3,24 @@
 
 \subsubsection{Requirements}
 
-%
-DMS-REQ-0293,DMS-REQ-0294.
-DMS-REQ-0302,DMS-REQ-0303,
-DMS-REQ-0106,
-DMS-REQ-0304,
-DMS-REQ-0292
+DMS-REQ-0106,DMS-REQ-0292,DMS-REQ-0293,DMS-REQ-0294,DMS-REQ-0302,DMS-REQ-0303,DMS-REQ-0304.
 
 \subsubsection{Test items}
 
 This test will check that the DRP Science Payload can be executed using the current state-of-the-art execution service provided by the LSST Data Facility.
 
-Specifically, this will demonstrate that:
+Specifically, this will check if the following requirements are fulfilled:
 
 \begin{itemize}
-
-  \item{A selection of dataset can be identified, retrieved, and processed (DMS-REQ-0293).}
-  \item{Selected datasets can be processed through selected Data Release Production science payload using a prototype of the production system. Processed results will be recorded (DMS-REQ-0294).}
-  \item{The software can orchestrate execution of the pipelines on LSST-VC compute nodes (DMS-REQ-0302).}
-  \item{The software can monitor the status of pipeline execution (DMS-REQ-0303).}
-
-  \item{The provenance and metadata of the data products, such as the list of input images for the coadded images and how to recreate the data, shall be stored (DMS-REQ-0106).}
-  \item{The software can detect faults in pipeline execution and recover when possible (DMS-REQ-0304).}
-  \item{All IDs shall be unique across data releases databases (DMS-REQ-0292).}
+  \item{For each Coadded Image, DMS shall store: the list of input images and the pipeline parameters, including software versions, used to derive it, and a sufficient set of metadata attributes for users to re-create them in whole or in part (DMS-REQ-0106).}
+  \item{To reduce the likelihood for confusion, all IDs shall be unique across databases and database versions, other than those corresponding to uniquely identifiable entities (i.e., IDs of exposures) (DMS-REQ-0292).}
+  \item{A Dataset may consist of one or more pixel images, a set of records in a file or database, or any other grouping of data that are processed or produced as a logical unit. The DMS shall be able to identify and retrieve complete, consistent datasets for processing (DMS-REQ-0293).}
+  \item{The DMS shall process all requested datasets until either a successful result is recorded or a permanent failure is recognized. If any dataset is processed, in part or in whole, more than once, only one of the wholly processed results will be recorded for further processing.
+(DMS-REQ-0294).}
+  \item{The DMS shall provide software to orchestrate execution of productions, including deploying pipelines on a computing platform (DMS-REQ-0302).}
+  \item{The DMS shall provide software to monitor execution of pipelines in real time (DMS-REQ-0303).}
+  \item{The DMS shall provide software to detect faults in pipeline execution and recover when possible.
+(DMS-REQ-0304).}
 
 \end{itemize}
 
