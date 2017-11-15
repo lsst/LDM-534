@@ -38,51 +38,118 @@ Specifically, this will check if the following requirements are fulfilled:
 
 This test case shall be executed on a system at NCSA.
 
-For Fall 2017, we assume that this system will be the LSST Verification Cluster (LSST-VC),
-with access to the GPFS shared filesystem and an Oracle database system.
+For LDM-503-2, this NCSA system will be the LSST Verification Cluster (LSST-VC),
+with read/write access to the GPFS shared filesystem and a single node Oracle database.
 
 \paragraph{Software}\label{sec:software}
-The DM Software Stack and the DESDM Framework packages will be pre-installed.
+The LSST DM Software Stack and the DESDM Framework packages will be pre-installed.
 
-For Fall 2017, the version of the DM Software Stack will be Release 14.0, and the version of the DESDM Framework packages, plugins, and integration code will be 1.01.
+For LDM-503-2, the version of the DM Software Stack will be Release 14.0, and the version of the DESDM Framework packages, plugins, and integration code will be 1.01.
 The Python 2 version will be used.
 The ticket branch \texttt{tickets/DM-12291} of the Software Stack packages \texttt{meas{\_}base}, \texttt{pipe{\_}tasks}, and \texttt{obs{\_}subaru} will be used to change the patch ID naming convention.
 This is due to issues of having commas in the filenames and data IDs, as discussed in \jira{RFC-361}; the solution has been agreed in \jira{RFC-365} for future implementation in \jira{DM-11874}, \jira{DM-11875}, and \jira{DM-11876}.
 
+A single eups prototype package will be defined to encompass the above mentioned software.
+
 \subsubsection{Input specification}\label{sec:input}
 
-At least one tract of the Hyper Suprime-Cam "RC" dataset, as defined in DMTR-31, will be used.
-The calibration dataset will be the 20170105 version, as in DMTR-31.
+One to three tracts of the Hyper Suprime-Cam dataset will be used along with appropriate calibration datasets.
 
+For LDM-503-2, the three tracts of the Hyper Suprime-Cam "RC" dataset, as defined in DMTR-31, will be used.
+The calibration dataset will be the 20170105 version, as in DMTR-31.   Raw files known to fail processCcd 
+should be blacklisted.
 
 \subsubsection{Output specification}
 
-The output data products will be made available on a shared filesystem accessible at LSST-VC and files are managed by Data Backbone.
+The output data products will be available from the Data Backbone.
+
+For LDM-503-2, the output data products will be available on the LSST-VC via a shared filesystem and data discovery is done via SQL queries against the Oracle database.
+
+
+\subsubsection{Test configuration}\label{sec:configuration}
+
+For each test, the science configuration and operations configuration of the pipeline must be specified.
+
+\paragraph{Science configuration}
+\begin{enumerate}
+    \item{What pipeline steps are to be executed?}
+    \begin{enumerate}
+        \item{For LDM-503-2 test, the following pipeline steps will be executed: }
+        \begin{itemize}
+        \item{processCcd}
+        \item{makeCoaddTempExp}
+        \item{assembleCoadd}
+        \item{detectCoaddSources}
+        \item{mergeCoaddDetections}
+        \item{measureCoaddSources}
+        \item{mergeCoaddMeasurements}
+        \item{forcedPhotCoadd}
+        \end{itemize}
+    \end{enumerate}
+    \item{What metadata needs to be saved for each data product type?}
+    \begin{itemize}
+        \item{For LDM-503-2 test, basic metadata such are visit, ccd, patch, tract, filter are required as appropriate for each data product type.   Future milestones will expand this to include other science values.}
+    \end{itemize}
+    \item{Any non-default task configuration to be used?} \\
+        For LDM-503-2 test, use the HSC default configs from the stack, 
+        including the task defaults and obs{\_}subaru’s overrides, except:
+        \begin{itemize}
+            \item{Since not running MosaicTask, set doApplyUberCal=False for makeCoaddTempExp.py and assembleCoadd.py.}
+            \item{In makeCoaddTempExp.py, retarget the select subtask to PsfWcsSelectImagesTask, similar to coaddDriver.py in pipe{\_}drivers.}
+            \item{In assembleCoadd.py, apply config override of \$OBS{\_}SUBARU{\_}DIR/config/assembleCoadd.py.}
+        \end{itemize}
+\end{enumerate}
+\paragraph{Operations configuration}
+\begin{enumerate}
+    \item{Any special Batch Processing Service configuration to be used?} \\
+    For LDM-503-2 test,
+    \begin{enumerate}
+        \item{Use default "cp" transfer mechanism on LSST-VC.}
+        \item{Each tract will be executed on its own set of nodes (obtained using allocateNodes.py) as opposed to a single larger set of nodes shared by all tracts.}
+    \end{enumerate}
+
+\end{enumerate}
+
+
+
 
 \subsubsection{Procedure}
 
+
+
+
 \paragraph{Setup}
 \begin{enumerate}
-
-  \item{The LSST Science Pipelines and the DESDM Framework, plugins, and integration code as described in \S\ref{sec:software}  will be installed and setup by the operator.}
+  \item{The LSST Science Pipelines and the DESDM Framework, plugins, and integration code as described in \S\ref{sec:software} will be installed.}
   \begin{enumerate}
-    \item{For Fall 2017, the software will be installed into the GPFS space at \texttt{/project/production/} on LSST-VC.}
+    \item{For LDM-503-2, the software will be installed into the GPFS space at \texttt{/project/production/} on LSST-VC.}
   \end{enumerate}
-  \item{Input raw and calibration data must exist in the Data Backbone. If not, the data will be ingested into Data Backbone.  The input dataset selected in \S\ref{sec:input} will be tagged.}
+  \item{Input raw and calibration data must exist in the Data Backbone. If not, the data will be ingested into Data Backbone.}  
   \begin{enumerate}
-    \item{For Fall 2017, the prototype Data Backbone is acessible on the GPFS filesystem on LSST-VC.}
+    \item{For LDM-503-2, the prototype Data Backbone is accessible on the GPFS filesystem on LSST-VC.   This means that the framework can use a "cp" transfer protocol between the job and the Data Backbone and does not require additional transfer services to be running.}
   \end{enumerate}
-  \item{Given the LSST Science Pipelines version, the operator will generate the full config files and schema files, which are then ingested into the prototype Data Backbone.}
+  \item{The operator tags and blacklists input data as appropriate for test (\S\ref{sec:input}).}
+  \item{Given the LSST Science Pipelines version, the operator will generate the full config files and schema files (\S\ref{sec:configuration}), which are then ingested into the Data Backbone.}
   \item{The pipeline workflow definition file of a consistent version will be downloaded; its operations- and dataset-specific inputs will be modified accordingly.}
   \begin{enumerate}
-    \item{For Fall 2017, the pipeline workflow definition file is a "wcl" file as used by the DESDM Framework Software.}
+    \item{For LDM-503-2, the pipeline workflow definition file is a "wcl" file as used by the DESDM Framework Software.}
   \end{enumerate}
 \end{enumerate}
 
 \paragraph{Execution}
 \begin{enumerate}
-  \item{The execution for each tract of the input data in \S\ref{sec:input} will be submitted to the hardware in \S\ref{sec:hardware}.}
-  \item{During exeuction, the operator will use software to demonstrate its ability to check the processing status.}
+  \item{The execution for each tract of the input data in \S\ref{sec:input} will be submitted to the hardware in \S\ref{sec:hardware} using the configuration in \S\ref{sec:configuration}.}
+  \item{During execution, the operator will use software to demonstrate the ability to check the processing status.}
+  \begin{enumerate}
+    \item{For LDM-503-2, the available Batch Production Service monitoring software consists of two commands: one to summarize currently submitted processing, one to get more details of single submission.}
+  \end{enumerate}
+  \item{If processing attempt completes, operator tags attempt as potential for release.  The campaign tags are used to make pre-release QA queries simpler.}
+  \item{If processing attempt fails, restart/resubmit on certain errors} \\
+    For LDM-503-2 test,
+    \begin{enumerate}
+        \item{Low level errors are automatically retried by framework (i.e., db connection fails, file transfer to/from data backbone fails).   For other errors, operator decides whether to just resubmit.   While a course-grained pipeline manual restart capability is available, the operator will simply resubmit the entire pipeline appropriately updating the state in the Oracle database.  Output files from previous attempts can be purged from the Data Backbone if no longer needed for debugging.}
+        \item{If a processing attempt is determined by the operator and production scientist to not be able to complete successfully, the attempt is not tagged and the problems are recorded.  All output files from a single failed processing attempt is kept in the Data Backbone for debugging purposes.} 
+    \end{enumerate}
 \end{enumerate}
 
 \paragraph{Non-science QA}
@@ -91,10 +158,25 @@ The output data products will be made available on a shared filesystem accessibl
   For each of the expected data products types (listed in \S\ref{drp-00-10-items})
   and each of the expected units (PVIs, coadds, etc), the data product will be
   verified to be non-empty.}
-  \item{A brief summary of the execution metrics, such as the number of executions of each executable, execution time usage, etc. will be gathered and examined.}
-  \item{The database will be queried to obtain the count of the files. The number will be cross-checked with the filesystem as a consistency verification.}
+    \begin{enumerate}
+        \item{Ask the Data Backbone about the files generated by each tract's execution through the pipeline.}
+        \item{Verify the physical and location information in Data Backbone DB matches the Data Backbone filesystem and vice-versa.} 
+    \end{enumerate}
+  \item{Check that for each data product type that the appropriate metadata was saved for each file as defined in \S\ref{sec:configuration}}
+  \item{Check provenance}
+    \begin{enumerate}
+        \item{Generically check that each file can be linked with the task and processing attempt that created it via the Data Backbone.}
+        \item{Generically check that the inputs for each step were saved to the Oracle database.}
+        \item{Specifically check conditions of DMS-REQ-0106.}
+    \end{enumerate}
+  \item{A brief summary of the execution metrics, such as the number of executions of each executable, execution time usage, wallclock per tract,
+         etc. will be gathered and examined.}
+  \item{Any failure of non-science QA can cause an attempt to be removed from the campaign tag, marked as a bad attempt, and be resubmitted.} 
 \end{enumerate}
+
 \paragraph{First-order Science QA}
 \begin{enumerate}
   \item{Production Scientist will perform first-order science quality assurance.}
+  \item{These tests were not scheduled as part of LDM-503-2, but will be specified and used in future work.}
+  \item{Any failure of non-science QA can cause an attempt to be removed from the campaign tag, marked as a bad attempt, and be resubmitted.} 
 \end{enumerate}
