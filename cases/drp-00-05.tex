@@ -9,7 +9,7 @@ DMS-REQ-0106,DMS-REQ-0292,DMS-REQ-0293,DMS-REQ-0294,DMS-REQ-0302,DMS-REQ-0303,DM
 
 This test will check that the DRP Science Payload can be executed using the current state-of-the-art execution service provided by the LSST Data Facility.
 
-Specifically, this will check if the following requirements are fulfilled:
+Specifically, this will check if the following requirements are fulfilled in the context of this test case:
 
 \begin{itemize}
   \item{For each Coadded Image, DMS shall store: the list of input images and the pipeline parameters, including software versions, used to derive it, and a sufficient set of metadata attributes for users to re-create them in whole or in part (DMS-REQ-0106).}
@@ -53,11 +53,11 @@ A single eups prototype package will be defined to encompass the above mentioned
 
 \subsubsection{Input specification}\label{sec:input}
 
-One to three tracts of the Hyper Suprime-Cam dataset will be used along with appropriate calibration datasets.
+A small number of selected tracts of the Hyper Suprime-Cam dataset will be used along with appropriate calibration datasets.
 
 For LDM-503-2, the three tracts of the Hyper Suprime-Cam "RC" dataset, as defined in DMTR-31, will be used.
 The calibration dataset will be the 20170105 version, as in DMTR-31.   Raw files known to fail processCcd 
-should be blacklisted.
+will be blacklisted.
 
 \subsubsection{Output specification}
 
@@ -167,7 +167,6 @@ For each test, the science configuration and operations configuration of the pip
     \begin{enumerate}
         \item{Generically check that each file can be linked with the task and processing attempt that created it via the Data Backbone.}
         \item{Generically check that the inputs for each step were saved to the Oracle database.}
-        \item{Specifically check conditions of DMS-REQ-0106.}
     \end{enumerate}
   \item{A brief summary of the execution metrics, such as the number of executions of each executable, execution time usage, wallclock per tract,
          etc. will be gathered and examined.}
