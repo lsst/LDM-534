@@ -19,9 +19,18 @@ Specifically, this will demonstrate that:
   (DMS-REQ-0347);}
   \item{Derived quantities are provided in pre-computed columns
   (DMS-REQ-0331);}
-  \item{..... science V\&V .....}
+  \item{Aperture corrections for different photometry algorithms are consistent.}
+  \item{PSF models correctly predict the ellipticities of stars over the field of view.}
+  \item{Photometry measurements are consistent with reference catalog photometry (including sources not used in photometric calibration).}
+  \item{Astrometry measurements are consistent with reference catalog positions (including sources not used in astrometric calibration).}
+  \item{Forced and unforced photometry measurements are consistent.}
+  \item{The slope of the stellar locus in color-color space is not a function of position on the sky.}
 
 \end{itemize}
+
+This test does not include quantitative targets for the science quality criteria; we instead require for each test that we be able to quickly construct a plot in which such a target can be visualized.
+
+All science quality tests in this section shall distinguish between blended and isolated objects.
 
 \subsubsection{Intercase dependencies}
 
@@ -79,8 +88,6 @@ None.
 
   \item{A ``Data Butler'' will be initialized to access the repository.}
 
-  \item{For each processed combination of patch, tract and filter, the object
-  catalog will be retrieved by the butler and ... some stuff ... will be
-  checked.}
+  \item{Scripts from the \texttt{pipe\_analysis} package will be run on every tract to check for the presence of data products and make plots}
 
 \end{itemize}

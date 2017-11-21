@@ -19,9 +19,13 @@ Specifically, this will demonstrate that:
   (DMS-REQ-0347);}
   \item{Derived quantities are provided in pre-computed columns
   (DMS-REQ-0331)};
-  \item{..... science V\&V .....}
+  \item{Aperture corrections for different photometry algorithms are consistent.}
+  \item{Photometry measurements are consistent with reference catalog photometry (including sources not used in photometric calibration).}
+  \item{Astrometry measurements are consistent with reference catalog positions (including sources not used in astrometric calibration).}
 
 \end{itemize}
+
+This test does not include quantitative targets for the science quality criteria; we instead require for each test that we be able to quickly construct a plot in which such a target can be visualized.
 
 \subsubsection{Intercase dependencies}
 
@@ -79,7 +83,6 @@ None.
 
   \item{A ``Data Butler'' will be initialized to access the repository.}
 
-  \item{For each processed CCD, the source catalog will be retrieved by the
-  butler and ... some stuff ... will be checked.}
+  \item{Scripts from the \texttt{pipe\_analysis} package will be run on every visit to check for the presence of data products and make plots.}
 
 \end{itemize}

@@ -17,7 +17,13 @@ Specifically, this will demonstrate that:
 
   \item{Coadds have been generated and persisted during payload execution;}
   \item{Each coadd provides a spatially varying PSF model (DMS-REQ-0047).}
-  \item{..... science V\&V .....}
+  \item{PSF models correctly predict the ellipticities of stars over each
+  tract.}
+  \item{Saturated pixels are correctly masked.}
+  \item{Pixels affected by satellite trails and ghosts are rejected from the coadd.}
+  \item{The background is not oversubtracted around bright objects.}
+
+This test does not include quantitative targets for the science quality criteria; we instead require for each test that we be able to quickly construct a plot or display summary images that allow such a target can be visualized.
 
 \end{itemize}
 
@@ -81,6 +87,8 @@ None.
   from the Butler, and the existence of all components described in
   \S\ref{drp-00-30-items} will be verified.}
 
-  \item{...Science V\&V ....}
+  \item{Scripts from the \texttt{pipe\_analysis} package will be run on every visit to check for the presence of data products and make plots}
+
+  \item{Ten patches will be chosen at random and inspected by eye for unmasked artifacts.}
 
 \end{itemize}
