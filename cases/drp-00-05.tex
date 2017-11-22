@@ -112,7 +112,7 @@ For each test, the science configuration and operations configuration of the pip
         including the task defaults and \texttt{obs{\_}subaru}’s overrides, except:
         \begin{itemize}
             \item{Since not running \texttt{MosaicTask}, set \texttt{doApplyUberCal=False} for \texttt{makeCoaddTempExp.py} and \texttt{assembleCoadd.py}.}
-            \item{In \texttt{makeCoaddTempExp.py}, retarget the \texttt{select} subtask to \texttt{PsfWcsSelectImagesTask}, similar to \texttt{coaddDriver.py} in \texttt{pipe{\_}drivers}.}
+            \item{In \texttt{makeCoaddTempExp.py} and \texttt{assembleCoadd.py}, retarget the \texttt{select} subtask to \texttt{PsfWcsSelectImagesTask}, similar to \texttt{coaddDriver.py} in \texttt{pipe{\_}drivers}.}
         \end{itemize}
 \end{enumerate}
 \paragraph{Operations configuration}
@@ -161,7 +161,7 @@ QA (\S\ref{sec:first-order-qa}) performed by Production Scientists.
   \item{If the processing attempt fails due to certain infrastructure configuration or transient instability (e.g., network blips), the processing of the tract can be tried again after the problem is resolved.}
 \end{enumerate}
 
-\paragraph{Basic Data Completeness and Integrity Checks}\label{basic_checks}
+\paragraph{Basic Data Completeness and Integrity Checks}\label{sec:basic_checks}
 \begin{enumerate}
   \item{When the execution finishes, the success of the execution will be verified by checking the existence of the expected output data.}
     \begin{enumerate}
@@ -187,7 +187,7 @@ QA (\S\ref{sec:first-order-qa}) performed by Production Scientists.
         etc.}
 \end{enumerate}
 
-\paragraph{First-order Science QA}\label{first-order-qa}
+\paragraph{First-order Science QA}\label{sec:first-order-qa}
 \begin{enumerate}
   \item{Production Scientist will perform first-order science quality assurance.}
   \item{These tests were not scheduled as part of LDM-503-2, but will be specified and used in future work.
