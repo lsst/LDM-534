@@ -37,22 +37,22 @@ For LDM-503-2, this NCSA testbed includes:
 \item{Filesystem being used by the prototype Data Backbone. (This means that the framework can use a \texttt{cp} transfer protocol between the job and the Data Backbone and does not require additional transfer services to be running.)}
 \item{Filesystem for the individual job scratch directories.}
 \end{enumerate}
-\item{Single node Oracle database (version 12c)} 
+\item{Single node Oracle database (version 12c)}
 \item{Submit node (lsst-dev01.ncsa.illinois.edu) running the HTCondor Central Manager (version 8.7.3).}
 \end{itemize}
 
 \paragraph{Software}\label{sec:software}
-All the necessary software will be pre-installed.   The software
+All the necessary software will be pre-installed. The software
 includes the science pipeline codes as well as the Data Management
 system codes (Batch Processing Service, Data Backbone).
 
-For LDM-503-2, Python 2 versions of software will be used.  The
+For LDM-503-2, Python 2 versions of software will be used. The
 science pipeline codes will be provided via the LSST DM Software
-Stack, release 14.0.  The Batch Processing Service and the Data Backbone 
+Stack, release 14.0.  The Batch Processing Service and the Data Backbone
 are initial versions using the DESDM Framework packages.  LSST-specific
-plugins as well as DRP pipeline integration codes are also pre-installed. 
+plugins as well as DRP pipeline integration codes are also pre-installed.
 All python DESDM Framework packages, plugins and integration codes exist
-in the lsst-dm github with tag 1.01. The DESDM prerequisites come from 
+in the lsst-dm github with tag 1.01. The DESDM prerequisites come from
 the official DESDM eups package firstcut Y4N+5.   They are installed
 using DESDM's eups install process.
 
@@ -72,9 +72,10 @@ package will be defined to encompass the above mentioned software.
 
 A small number of selected tracts of the Hyper Suprime-Cam dataset will be used along with appropriate calibration datasets.
 
-For LDM-503-2, the three tracts of the Hyper Suprime-Cam "RC" dataset, as defined in DMTR-31, will be used.
-The calibration dataset will be the 20170105 version, as in DMTR-31.   Raw files known to fail processCcd 
-will be blacklisted.
+For LDM-503-2, the three tracts of the Hyper Suprime-Cam ``RC1'' dataset, as
+defined Appendix \ref{sec:hscrc1}, will be used. The calibration dataset
+will be the 20170105 version, defined as per \citeds{DMTR-31}. Raw files known
+to fail processCcd will be blacklisted.
 
 \subsubsection{Output specification}
 
