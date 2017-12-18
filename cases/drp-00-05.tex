@@ -129,15 +129,13 @@ For each test, the science configuration and operations configuration of the pip
 \subsubsection{Procedure}
 
 Executing a pipeline successfully through the Batch Processing
-Serivce means that the processing attempt passed both basic data
-completeness and integrity checks (\S\ref{sec:basic_checks}) as well as first-order science
-QA (\S\ref{sec:first-order-qa}) performed by Production Scientists.
-
+Serivce means that the processing attempt passed basic data
+completeness and integrity checks (\S\ref{sec:basic_checks}).
 
 \paragraph{Setup}
 \begin{enumerate}
   \item{The LSST Science Pipelines and the DESDM Framework, plugins, and integration codes as described in \S\ref{sec:software} have already been installed.   The Operator merely sets up the expanded stack using eups.}
-  \item{Input raw and calibration data must exist in the Data Backbone. If not, the data will be ingested into Data Backbone.}  
+  \item{Input raw and calibration data must exist in the Data Backbone. If not, the data will be ingested into Data Backbone.}
   \item{The operator tags and blacklists input data as appropriate for test (\S\ref{sec:input}).}
   \item{Given the LSST Science Pipelines version, the operator will generate the full config files and schema files (\S\ref{sec:configuration}), which are then ingested into the Data Backbone.}
 
@@ -186,11 +184,4 @@ QA (\S\ref{sec:first-order-qa}) performed by Production Scientists.
     \end{enumerate}
   \item{Check runtime metrics, such as the number of executions of each code, wallclock per step, wallclock per tract,
         etc.}
-\end{enumerate}
-
-\paragraph{First-order Science QA}\label{sec:first-order-qa}
-\begin{enumerate}
-  \item{Production Scientist will perform first-order science quality assurance.}
-  \item{These tests were not scheduled as part of LDM-503-2, but will be specified and used in future work.
-  For attempts that pass these future first-order science QA steps will be executed through }
 \end{enumerate}
