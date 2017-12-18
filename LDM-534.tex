@@ -8,7 +8,7 @@
 
 \setDocCompact{true}
 
-\title[STS for \product]{\product~Software Test Specification}
+\title[Test Spec for \product]{\product~Test Specification}
 
 \author{John D. Swinbank}
 \setDocRef{\lsstDocType-\lsstDocNum}
@@ -20,8 +20,9 @@ This document describes the detailed test specification for the \product{}.
 
 % Most recent last
 \setDocChangeRecord{%
-	\addtohist{1}{2017-06-30}{Initial release of draft version.}{JDS}
-	\addtohist{2}{2017-07-03}{Updated metadata; no content changes.}{JDS}
+	\addtohist{1}{2017-06-30}{Initial release of draft version.}{Swinbank}
+	\addtohist{2}{2017-07-03}{Updated metadata; no content changes.}{Swinbank}
+    \addtohist{3}{2017-11-XX}{Updated to cover the LDM-503-2 (``HSC Reprocessing'') milestone.}{Bosch, Gelman, Petravick, Swinbank}
 }
 
 \setDocCurator{John D. Swinbank}
@@ -49,14 +50,9 @@ scientific processing leading to:
 
 \end{itemize}
 
-\begin{note}
-At time of writing, this document describes primarily a provisional series of
-tests to verify the correct operation of the Calibration Products Production
-system. This document is under rapid development during Summer 2017; it is
-expected to become both more comprehensive and more specific over the upcoming
-months.
-\end{note}
-
+A full description of this product is provided in \S\S7 (which describes the
+Data Facility provided execution services) and 13.1 (the science payloads) of
+\citeds{LDM-148}.
 
 \subsection{Objectives}
 \label{sec:objectives}
@@ -76,14 +72,25 @@ the LSST system (as described in \citeds{LDM-148}):
 
 \begin{itemize}
 
-  \item{Annual Calibration}
-  \item{Daily Calibration Update}
-  \item{Data Release Production}
-  \item{Periodic Calibration}
-  \item{Raw Calibration}
-  \item{Science Algorithms (partial)}
-  \item{Science Primitives (partial)}
-  \item{Template Generation}
+  \item{Services provided by the LSST Data Facility:
+
+    \begin{itemize}
+      \item{Template and Calibration Products Production Execution}
+      \item{Data Release Production Execution}
+      \item{Level 2 Quality Control}
+    \end{itemize}
+  }
+
+  \item{Science payloads:
+
+    \begin{itemize}
+      \item{Annual Calibration Products Production Payload}
+      \item{Data Release Production Payload}
+      \item{Periodic Calibration Products Production Payload}
+      \item{Template Generation Payload}
+    \end{itemize}
+
+  }
 
 \end{itemize}
 
@@ -93,6 +100,7 @@ the LSST system (as described in \citeds{LDM-148}):
 \addtocounter{table}{-1}
 
 \begin{tabular}[htb]{l l}
+\citeds{LDM-148} & LSST DM System Architecture \\
 \citeds{LDM-151} & LSST DM Science Pipelines Design \\
 \citeds{LDM-294} & LSST DM Organization \& Management \\
 \citeds{LDM-502} & The Measurement and Verification of DM Key Performance Metrics \\
@@ -163,15 +171,20 @@ The following are the major items under test:
 
 \begin{itemize}
 
-  \item{Science payloads capable of generating all LSST Level 2 data
+  \item{The science payload capable of generating all LSST annual data
   products;}
 
   \item{Calibration products payloads, run at a variety of cadences, to
-  generate all calibration products required in the generation of LSST Level 1
-  and 2 data products;}
+  generate calibration products required in the generation of LSST nightly and
+  annual data products;}
 
-  \item{Template generation payloads capable of generating deep templates
-  required for difference imaging in the context of the LSST Level 1 system.}
+  \item{The template generation payload capable of generating deep templates
+  required for difference imaging in the context of both nightly and annual
+  processing.}
+
+  \item{Services capable of scheduling and managing the execution of all of
+  the above payloads, marshalling their results, and making them available to
+  other parts of the system for analysis or further distribution.}
 
 \end{itemize}
 
@@ -181,27 +194,20 @@ The following are the major items under test:
 \begin{itemize}
 
   \item{Execution of payloads described in \S\ref{sec:tasks};}
-  \item{Persistence of all required data products.}
+  \item{Persistence of all required data products;}
+  \item{Scientific fidelity of those data products: do they satisfy the
+  requirements described in \citeds{LSE-61}?}
 
 \end{itemize}
-
 
 \subsection{Features not to be tested}
 \label{sec:featnot2test}
 
-This version of the \product{} test specification addresses only the functional
-requirements of the systems under test, as derived from the DM System
-Requirements (\citeds{LSE-61}).
-
-A further set of requirements which describe the scientific fidelity of the
-output data products are not tested in this version of this test
-specification pending flow-down to \citeds{LSE-61}.
-
-The progress of the DM system towards satisfying the scientific requirements
-on LSST's data products is tracked by means of a series of Key Performance
-Metrics (KPMs) derived from high-level requirements documents (\citeds{LPM-17,
-LSE-29, LSE-30}). The system being used to track KPMs and to ensure compliance
-with these requirements is described in \citeds{LDM-502}.
+This document does not describe facilities for periodically generating or
+collecting key performance metrics (KPMs), except insofar as those KPMs are
+incidentally measured as part of executing the documented testcases. The KPMs
+and the system being used to track KPMs and to ensure compliance with
+documented requirements is described in \citeds{LDM-502}.
 
 \subsection{Pass/fail criteria}
 \label{sec:passfail}
@@ -212,8 +218,8 @@ The results of all tests will be assessed using the criteria described in
 Note that, when executing pipelines, tasks or individual algorithms, any
 unexplained or unexpected errors or warnings appearing in the associated log
 or on screen output must be described in the documentation for the system
-under test.  Any warning or error for which this is not the case must be filed
-as a software problem report and filed be the DMCCB.
+under test. Any warning or error for which this is not the case must be filed
+as a software problem report and filed with the DMCCB.
 
 \subsection{Suspension criteria and resumption requirements}
 \label{suspension}
@@ -222,314 +228,61 @@ Refer to individual test cases where applicable.
 
 \subsection{Naming convention}
 
-All tests are named according to the pattern prod-scope-xx-yy where:
+All tests are named according to the pattern \textsc{prod-xx-yy} where:
 
 \begin{description}[font=\normalfont\scshape]
 
-  \item[prod]{The product code, per \citeds{LDM-294}. Relevant entries for this document are:
+  \item{prod}{The product under test. Relevant entries for this document are:
     \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
-      \item[caldaily]{Daily CPP payload}
-      \item[cppslow]{Periodic CPP payload}
-      \item[cppyear]{Annual CPP payload}
-      \item[tmplgen]{Template generation payload}
-      \item[cppqc]{CPP QC measurement generators}
-      \item[drp]{Annual mini-DRP and DRP payload}
-      \item[l2qc]{L2 QC measurement generators}
-      \item[cppqc]{CPP QC measurement generators}
+      \item[DRP]{The Data Release Production payload and associated service}
+      \item[CPP]{The Calibration Products Production payload and associated services}
+      \item[TMP]{The Template Generation payload and associated service}
     \end{description}
   }
-  \item[scope]{The type of test being described:
-    \begin{description}[font=\normalfont\scshape,topsep=-1.0ex]
-      \item[acp]{Acceptance}
-      \item[bck]{Backup and restore}
-      \item[fun]{Functional}
-      \item[ins]{Installation}
-      \item[int]{Integration}
-      \item[itf]{Interface}
-      \item[mnt]{Maintenance}
-      \item[prf]{Performance}
-      \item[reg]{Regression}
-      \item[ver]{Verification}
-    \end{description}
-  }
-  \item[xx]{Test design number (in increments of 10)}
+  \item[xx]{Test specification number (in increments of 10)}
   \item[yy]{Test case number (in increments of 5)}
 
 \end{description}
 
-
-%--------------------------------------------------
-% SPECIFICATION DESIGN OVERVIEW
-%--------------------------------------------------
-%\section{Specification Design Overview \label{sect:design}}
-%Specify refinements of the test approach described in \citeds{LDM-503} if any.
-%If not suppress this section .
-
-
 \input{specs/specs.tex}
-
-%
-% Here follow test case specifications
-%
-
 \input{cases/cases.tex}
 
+\appendix
 
-%% NON-TESTING VERIFICATION METHODS TEST CASES
-%\subsection{Test Case \product-VER-XX-YY \label{sect:testcaseid}}
-%
-%\subsubsection{Requirements \label{sect:reqs}}
-%Specify the requirements that fulfill the test case, comma-separated and ending with '.'\\
-%e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
-%Note that the format is essential for the script that creates the traceability matrices works fine.
-%
-%\subsubsection{Test items \label{sect:tcitems}}
-%Identify and briefly describe the items and features to be exercised by this test case (e.g.:
-%\begin{itemize}
-%\item  demonstrate that an
-%specific document is written or that it contains the information required
-%\item or...
-%\item demonstrate that a parameter is set to a specific value
-%\item or...
-%\item the code is written in python3
-%\end{itemize}
-%
-%\subsubsection{Intercase dependencies \label{sect:interface_dependencies}}
-%List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
-%
-%\subsubsection{Procedure \label{sect:procedures}}
-%If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
-%case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
-%the test procedure shall be given otherwise. \\
-%
-%Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
-%up, operator intervention, output determination procedures, and special wrap up.
+\section{The Hyper Suprime-Cam ``RC'' datasets}
 
-%
-%
-%% NON-TESTING VERIFICATION METHODS TEST DESIGN
-%\section{\product-VER-XX \label{sect:designid_verification}}
-%
-%\subsection{Objective \label{sect:designobj}}
-%This test design includes all the verification methods different to the dynamic testing, needed for the
-%demonstration of the fulfillment of specific requirements of the DMSR.\\
-%This includes  the requirements that do not need the execution of the software systems, but a careful document or code inspection, review
-%or analysis.
-%
-%\subsection{Features to be tested \label{sect:totest}}
-%Identify the test items and describe the features and combinations of features that are the object of this design
-%specification. E.g.:\\
-%\begin{itemize}
-%\item Demonstrate that the CU has produced an specific document (e.g. the Software Development Plan)
-%\item Demonstrate the behavior or value of an specific parameter (e.g. "As a minimum the PPN parameter shall be included in
-%the global model"
-%\item Static analysis using tools such as Findbugs or checkstyle, etc.
-%\item etc
-%\end{itemize}
-%The features to be tested depends on the content of the Software Requirements Document. Therefore the above list is just
-%an example.
-%
-%\subsection{Approach refinements \label{sect:approach}}
-%Specify the verification methods to be used to verify the features describe in the section above. These methods are
-%described in the DM SVTP \citeds{LDM-503}. E.g.:
-%\begin{itemize}
-%\item Code inspection
-%\item Document inspection
-%\item Review
-%\item Static analysis
-%\item etc
-%\end{itemize}
-%
-%\subsection{Test case identification \label{sect:testcaselist}}
-%List the identifier and a brief description of each test case associated with this design.
-%We need to agree on the identifiers here .. perhaps they come out of MD ?
-%
-%\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
-%{\bf Test Case}  & {\bf Description}  \\\hline
-%\product-VER-XX-10 & design inspection \\\hline
-%\product-VER-XX-15 & Code inspection \\\hline
-%\product-VER-XX-20 & Testing review \\\hline
-%etc & \\\hline
-%\end{longtable}
-%The number and scope of the test cases depend on the requirements to be verified. The list provide above is only an example.
-%
-%\subsection{Feature pass/fail criteria}
-%Specify the specific criteria for this design to be used to determine whether the feature or feature combination has passed or failed.
-%
-%% NON-TESTING VERIFICATION METHODS TEST CASES
-%\subsection{Test Case \product-VER-XX-YY \label{sect:testcaseid}}
-%
-%\subsubsection{Requirements \label{sect:reqs}}
-%Specify the requirements that fulfill the test case, comma-separated and ending with '.'\\
-%e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
-%Note that the format is essential for the script that creates the traceability matrices works fine.
-%
-%\subsubsection{Test items \label{sect:tcitems}}
-%Identify and briefly describe the items and features to be exercised by this test case (e.g.:
-%\begin{itemize}
-%\item  demonstrate that an
-%specific document is written or that it contains the information required
-%\item or...
-%\item demonstrate that a parameter is set to a specific value
-%\item or...
-%\item the code is written in python3
-%\end{itemize}
-%
-%\subsubsection{Intercase dependencies \label{sect:interface_dependencies}}
-%List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
-%
-%\subsubsection{Procedure \label{sect:procedures}}
-%If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
-%case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
-%the test procedure shall be given otherwise. \\
-%
-%Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
-%up, operator intervention, output determination procedures, and special wrap up.
-%
-%
-%\section{\product-SCOPE-XX \label{sect:designid}}
-%
-%\subsection{Objective}
-%Specify the objective of this test design.
-%
-%\subsection{Features to be tested}
-%Identify the test items and describe the features and combinations of features that are the object of this design
-%specification. Other features may be exercised, but need not be identified.\\
-%For each feature or feature combination, a reference to its associated requirements should be included.
-%
-%\subsection{Approach refinements}
-%Specify refinements to the approach described in the test plan. Include specific test techniques to be used.
-%The method on analysis test results should be identified.\\
-%Specify the results of any analysis that provides a rationale for test case selection.\\
-%Summarize the common attributes of any test cases. This may include input constraints that must be true for every input
-%in the set of associated test cases, any shared environmental needs, any shared special procedural requirements and any
-%shared case dependencies.
-%
-%\subsection{Test case identification}
-%List the identifier and a brief description of each test case associated with this design.
-%
-%\begin{longtable} {|p{0.4\textwidth}|p{0.6\textwidth}|}\hline
-%{\bf Test Case}  & {\bf Description}  \\\hline
-%\product-SCOPE-XX-YY &
-%Description of the test case \\\hline
-%\end{longtable}
-%
-%\subsection{Feature pass/fail criteria}
-%Specify the specific criteria for this design to be used to determine whether the feature or feature combination has passed or failed.
-%
-%
-%%\newpage
-%
-%%--------------------------------------------------
-%% TEST CASE SPECIFICATION
-%%--------------------------------------------------
-%%\subsection{Test Case Specification \label{sect:testcases}}
-%%Define the test cases identified by a test design specification. For each identify test case specify:
-%
-%%\newpage
-%
-%\subsection{Test Case \product-SCOPE-XX-YY}
-%
-%\subsubsection{Requirements}
-%Specify the requirements that fulfill the test cases, comma-separated and ending with '.'\\
-%e.g. CU3-IDT-XM-FUN-30,CU3-IDT-ASD-FUN-20.\\
-%Note that the format is essential for the script that creates the traceability matrices works fine.
-%
-%\subsubsection{Test items}
-%Identify and briefly describe the items and features to be exercised by this test case.\\
-%For each item, consider supplying references to the following test item documentation: requirements specification, design
-%specification, user guide, operations guide, installation guide, etc.
-%
-%\subsubsection{Input specification \label{sect:tcinput}}
-%Specify each input required to execute the test case. Some of the inputs will be specified by value (with tolerances where
-%appropriate), while others will be specified by name.\\
-%Identify all appropriate databases, files, terminal messages, memory resident areas, and values passed by the operating system.\\
-%Specify all required relationships between inputs (e.g. timing).
-%
-%\subsubsection{Output specification \label{sect:tcoutput}}
-%Specify all the outputs and features (e.g. response time) required of the test items.
-%
-%\subsubsection{Environmental needs \label{sect:tcenvironment}}
-%\paragraph{Hardware \label{sect:tchw}}
-%Specify the characteristics and configurations of the hardware required to execute this test case.
-%\paragraph{Software \label{sect:tcsw}}
-%Specify the system and application software required to execute this test case. This may include system software such as operating
-%systems, compilers, simulators, and test tools.
-%\paragraph{Other \label{sect:tcother}}
-%Any other special requirements such as unique facility needs or specially trained personnel.
-%
-%\subsubsection{Intercase dependencies}
-%List the identifiers of the test cases that must be executed prior to this test case. Summarize the nature of the dependencies.
-%
-%\subsubsection{Procedure}
-%If the procedure is shared by various test cases it would be recommended to separate the procedure description from the test
-%case definition. Thus, only a reference to the procedure identification shall be provided. The complete description of
-%the test procedure shall be given otherwise. \\
-%
-%Describe any special constraints on the test procedures that execute this test case. These constraints may involve special set
-%up, operator intervention, output determination procedures, and special wrap up.
-%
-%\newpage
-%
-%%-----------------------------------------
-%% PROCEDURES
-%%-----------------------------------------
-%\section{Test Procedure Specification \label{proc_spec}}
-%
-%This section could be removed if the test cases specification describe their specific procedure, i.e. the procedure is included
-%in the test case definition.
-%
-%\subsection{Introduction \label{sect:peroc_intro}}
-%The purpose is to specify the steps for executing a set of test cases or, more generally, the steps used to analyze a software in order
-%to evaluate a set of features.\\
-%For every test procedure:
-%
-%\subsection{[PROCEDURE IDENTIFIER] \label{sect:procedureid}}
-%
-%\subsubsection{Purpose \label{sect:proc_purpose}}
-%Describe the purpose of this procedure. Provide the reference of the test cases that are executed by the procedure.
-%
-%\subsubsection{Special requirements \label{sect:proc_reqs}}
-%Identify any special requirements that are necessary for the execution of this procedure. These may include prerequisite procedures,
-%special skills requirements and special environmental requirements.
-%
-%\subsubsection{Procedure steps \label{sect:proc_steps}}
-%Describe every step of each procedure execution. Include the following steps as applicable:
-%\paragraph{Log \label{sect:proc_log}}
-%Describe any special methods or format for logging the results of test execution, the incidents observed, and any other events
-%pertinent to the test.
-%\paragraph{Set up \label{sect:proc_setup}}
-%Describe the sequence of actions necessary to set up the procedure execution.
-%\paragraph{Start \label{sect:proc_start}}
-%Describe the actions necessary to begin the procedure execution.
-%\paragraph{Proceed \label{sect:proc_proceed}}
-%Describe the actions necessary during the procedure execution.
-%\paragraph{Measure \label{sect:proc_measure}}
-%Describe how the test measurements is made.
-%\paragraph{Shut down \label{sect:proc_shutdown}}
-%Describe the action necessary to suspend testing when interruption is forced by unscheduled events.
-%\paragraph{Restart \label{sect:proc_restart}}
-%Identify any procedural restart points and describe the actions necessary to restart the procedure at each of these points.
-%\paragraph{Wrap up \label{sect:proc_wrapup}}
-%Describe the actions necessary to terminate testing.
-%\paragraph{Contingencies \label{sect:proc_contingencies}}
-%Describe the actions necessary to deal with anomalous events that may occur during execution.
-%
-%
-%\newpage
-%
-%\appendix
-%\section{TRACEABILITY \label{sect:traceability}}
-%The backward and forward traceability (i.e. requirements trace to a test and a test to a requirement, respectively) shall be provided in order to
-%ascertain the correlations between the test cases and the requirements they fulfill.\\
-%
-%\begin{longtable}{|p{0.44\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}|
-%}\hline
-%{\bf SRS Requirement} & {\bf Verification Method} & {\bf Partially/Completely Verified}
-%\\\hline
-%\end{longtable} \normalsize
-%
-%\textbf{Ruby scripts for this are available if th document is exactly like this
-% template - but we may be doing this in Magic Draw .. we need to decide on
-% that ..}
+\subsection{RC1}
+
+The original HSC ``release candidate'' dataset was defined as part of testing
+release 3.9.0 of the HSC pipeline (derived from the LSST DM Stack). It
+consists of 237 visits to the HSC ultra-deep Cosmos field and 83 visits to the
+HSC wide survey. Specifically, this includes the following
+visits\footnote{Defined using the standard LSST command-line task syntax}:
+
+\subsubsection{Ultra-deep Cosmos}
+\label{sec:hscrc1}
+
+\begin{description}
+
+\item[HSC-G]{\hfill \\ 11690..11712:2\^{}29324\^{}29326\^{}29336\^{}29340\^{}29350\^{}29352}
+\item[HSC-R]{\hfill \\ 1202..1220:2\^{}23692\^{}23694\^{}23704\^{}23706\^{}23716\^{}23718}
+\item[HSC-I]{\hfill \\ 1228..1232:2\^{}1236..1248:2\^{}19658\^{}19660\^{}19662\^{}19680\^{}19682\^{}19684\^{}\\19694\^{}19696\^{}19698\^{}19708\^{}19710\^{}19712\^{}30482..30504:2}
+\item[HSC-Y]{\hfill \\ 274..302:2\^{}306..334:2\^{}342..370:2\^{}1858..1862:2\^{}1868..1882:2\^{}11718..11742:2\^{}22602..\\22608:2\^{}22626..22632:2\^{}22642..22648:2\^{}22658..22664:2}
+\item[HSC-Z]{\hfill \\ 1166..1194:2\^{}17900..17908:2\^{}17926..17934:2\^{}17944..17952:2\^{}17962\^{}28354..28402:2}
+\item[NB0921]{\hfill \\ 23038..23056:2\^{}23594..23606:2\^{}24298..24310:2\^{}25810..25816:2}
+
+\end{description}
+
+\subsubsection{Wide}
+
+\begin{description}
+
+\item[HSC-G]{\hfill \\ 9852\^{}9856\^{}9860\^{}9864\^{}9868\^{}9870\^{}9888\^{}9890\^{}9898\^{}9900\^{}9904\^{}9906\^{}9912\^{}11568\^{}\\11572\^{}11576\^{}11582\^{}11588\^{}11590\^{}11596\^{}11598}
+\item[HSC-R]{\hfill \\ 11442\^{}11446\^{}11450\^{}11470\^{}11476\^{}11478\^{}11506\^{}11508\^{}11532\^{}11534}
+\item[HSC-I]{\hfill \\ 7300\^{}7304\^{}7308\^{}7318\^{}7322\^{}7338\^{}7340\^{}7344\^{}7348\^{}7358\^{}7360\^{}7374\^{}7384\^{}7386\^{}\\19468\^{}19470\^{}19482\^{}19484\^{}19486}
+\item[HSC-Y]{\hfill \\ 6478\^{}6482\^{}6486\^{}6496\^{}6498\^{}6522\^{}6524\^{}6528\^{}6532\^{}6544\^{}6546\^{}6568\^{}13152\^{}13154}
+\item[HSC-Z]{\hfill \\ 9708\^{}9712\^{}9716\^{}9724\^{}9726\^{}9730\^{}9732\^{}9736\^{}9740\^{}9750\^{}9752\^{}9764\^{}9772\^{}9774\^{}\\17738\^{}17740\^{}17750\^{}17752\^{}17754}
+
+\end{description}
+
 \end{document}

@@ -6,6 +6,8 @@ language: python
 python:
   - '3.5'
 before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y pandoc
   - "pip install 'lander>=0.1.0,<0.2'"
 script:
   # Compile PDF using containerized lsst-texmf
