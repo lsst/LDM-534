@@ -1,4 +1,4 @@
-.. image:: https://img.shields.io/badge/ldm--534-lsst.io-brightgreen.svg
+.. image:: https://img.shields.io/badge/ldm-534-lsst.io-brightgreen.svg
    :target: https://ldm-534.lsst.io
 .. image:: https://travis-ci.org/lsst/LDM-534.svg
    :target: https://travis-ci.org/lsst/LDM-534
