@@ -1,4 +1,4 @@
-\documentclass[DM,lsstdraft,STS,toc]{lsstdoc}
+\documentclass[DM,obsolete,STS,toc]{lsstdoc}
 \usepackage{enumitem}
 \input meta.tex
 
@@ -24,6 +24,7 @@ This document describes the detailed test specification for the \product{}.
 	\addtohist{2.0}{2017-07-03}{Updated metadata; no content changes.}{Swinbank}
   \addtohist{3.0}{2018-01-11}{Updated to cover the LDM-503-2 (``HSC Reprocessing'') milestone.}{Bosch, Chiang, Gower, Swinbank}
 	\addtohist{3.1}{2018-01-11}{Approved in \jira{RFC-425}}{T.~Jenness}
+        \addtohist{} {}{Document set to obsolete. Test cases included in \citeds{LDM-639}.}{G. Comoretto}
 }
 
 \setDocCurator{John D. Swinbank}
@@ -273,8 +274,8 @@ Procedure:
     * Authentication to file transfer service and database using LSST AA(?) service.
 
 * Install and configure software
-    * DBB Gateway client machine - dbb_gwclient and prereqs
-    * DBB Gateway server machine - dbb_gateway and prereqs
+    * DBB Gateway client machine - dbb\_gwclient and prereqs
+    * DBB Gateway server machine - dbb\_gateway and prereqs
 
 * If not already running, start test services
     * (L1 test stand services)
